@@ -106,12 +106,20 @@ O projeto utiliza abordagem **mobile-first**:
    SUPABASE_ANON_KEY=sua_chave_anon_aqui
    
    # Contato
+<<<<<<< HEAD
    WHATSAPP_NUMBER=XXXXXXXXXXXX
    CONTACT_EMAIL=XXXXXXXXXXXXXX
    
    # Autenticação (desenvolvimento)
    ADMIN_EMAIL=LOGIN
    ADMIN_PASSWORD=SENHA
+=======
+   WHATSAPP_NUMBER=5581999999999
+   CONTACT_EMAIL=lucid.suporte@gmail.com
+   
+   # Autenticação (desenvolvimento)
+   ADMIN_EMAIL=XXXXXXXXX
+   ADMIN_PASSWORD=XXXXXXXXXXXXX
    ```
 
 3. **Instalar dependências:**
@@ -164,9 +172,15 @@ php -S localhost:8000
 ### Configurar WhatsApp e Instagram:
 As configurações de contato são feitas no arquivo `.env`:
 ```env
+<<<<<<< HEAD
 WHATSAPP_NUMBER=5581999999999
 INSTAGRAM_URL=XXXXXXXXXXXXXXXX
 CONTACT_EMAIL=XXXXXXXXXXXXXXX
+=======
+WHATSAPP_NUMBER=558199999999
+INSTAGRAM_URL=https://www.instagram.com/lucid_brasil
+CONTACT_EMAIL=lucid.suporte@gmail.com
+
 ```
 Após alterar o `.env`, execute `npm run config` para atualizar os arquivos de configuração.
 
