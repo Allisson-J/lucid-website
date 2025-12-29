@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CRM | Lucid</title>
+
+  <meta name="description" content="CRM da Lucid - Gerencie seus leads e contatos.">
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/crm.css">
+</head>
+
+<body class="crm-page">
+
+  <!-- Header CRM -->
+  <header class="crm-header">
+    <div class="crm-header-content">
+      <div class="crm-logo">
+        <a href="index.html">
+          <h1>LUCID</h1>
+        </a>
+        <span class="crm-badge">CRM</span>
+      </div>
+      
+      <nav class="crm-nav">
+        <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <span class="user-info" id="userInfo"></span>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="crm-main">
+    <div class="crm-container">
+      
+      <!-- Dashboard Stats -->
+      <div class="crm-stats">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-content">
+            <h3 id="totalLeads">0</h3>
+            <p>Total de Leads</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🆕</div>
+          <div class="stat-content">
+            <h3 id="newLeads">0</h3>
+            <p>Novos (7 dias)</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📧</div>
+          <div class="stat-content">
+            <h3 id="withEmail">0</h3>
+            <p>Com Email</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📱</div>
+          <div class="stat-content">
+            <h3 id="withPhone">0</h3>
+            <p>Com Telefone</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard por Status -->
+      <div class="crm-stats-status">
+        <h2 class="section-title">Leads por Status</h2>
+        <div class="status-cards-grid">
+          <div class="status-card status-card-new" onclick="filterByStatus('new')">
+            <div class="status-card-header">
+              <div class="status-card-icon">🆕</div>
+              <div class="status-card-badge status-badge-new">Novo</div>
+            </div>
+            <div class="status-card-content">
+              <h3 id="statusNewCount">0</h3>
+              <p>Leads novos aguardando contato</p>
+            </div>
+            <div class="status-card-footer">
+              <span class="status-card-percentage" id="statusNewPercentage">0%</span>
+            </div>
+          </div>
+
+          <div class="status-card status-card-contacted" onclick="filterByStatus('contacted')">
+            <div class="status-card-header">
+              <div class="status-card-icon">📞</div>
+              <div class="status-card-badge status-badge-contacted">Contatado</div>
+            </div>
+            <div class="status-card-content">
+              <h3 id="statusContactedCount">0</h3>
+              <p>Leads que já foram contatados</p>
+            </div>
+            <div class="status-card-footer">
+              <span class="status-card-percentage" id="statusContactedPercentage">0%</span>
+            </div>
+          </div>
+
+          <div class="status-card status-card-qualified" onclick="filterByStatus('qualified')">
+            <div class="status-card-header">
+              <div class="status-card-icon">⭐</div>
+              <div class="status-card-badge status-badge-qualified">Qualificado</div>
+            </div>
+            <div class="status-card-content">
+              <h3 id="statusQualifiedCount">0</h3>
+              <p>Leads qualificados e interessados</p>
+            </div>
+            <div class="status-card-footer">
+              <span class="status-card-percentage" id="statusQualifiedPercentage">0%</span>
+            </div>
+          </div>
+
+          <div class="status-card status-card-converted" onclick="filterByStatus('converted')">
+            <div class="status-card-header">
+              <div class="status-card-icon">✅</div>
+              <div class="status-card-badge status-badge-converted">Convertido</div>
+            </div>
+            <div class="status-card-content">
+              <h3 id="statusConvertedCount">0</h3>
+              <p>Leads convertidos em clientes</p>
+            </div>
+            <div class="status-card-footer">
+              <span class="status-card-percentage" id="statusConvertedPercentage">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters and Actions -->
+      <div class="crm-actions">
+        <div class="crm-filters">
+          <input type="text" id="searchInput" placeholder="Buscar por nome, email ou telefone..." class="search-input">
+          <select id="filterStatus" class="filter-select">
+            <option value="all">Todos os status</option>
+            <option value="new">Novos</option>
+            <option value="contacted">Contatados</option>
+            <option value="qualified">Qualificados</option>
+            <option value="converted">Convertidos</option>
+          </select>
+        </div>
+        <div class="crm-buttons">
+          <button id="exportBtn" class="btn btn-secondary">Exportar CSV</button>
+          <button id="clearAllBtn" class="btn btn-danger">Limpar Todos</button>
+        </div>
+      </div>
+
+      <!-- Leads Table -->
+      <div class="crm-table-container">
+        <table class="crm-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Mensagem</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+            <tr>
+              <td colspan="7" class="empty-state">
+                <p>Nenhum lead encontrado. Os leads do formulário de contato aparecerão aqui.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Supabase JS - DEVE ser carregado ANTES de supabase-config.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  
+  <!-- JavaScript -->
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/app-config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/crm.js"></script>
+
+</body>
+</html>
+

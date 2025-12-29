@@ -1,0 +1,27 @@
+{
+  "name": "lucid-website",
+  "version": "1.0.0",
+  "description": "Site institucional da Lucid Tecnologia",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000",
+    "serve": "npx serve . -p 3000",
+    "setup": "node scripts/setup-config.js",
+    "config": "node scripts/setup-config.js",
+    "postinstall": "npm run setup"
+  },
+  "keywords": [
+    "lucid",
+    "tecnologia",
+    "automação",
+    "IA"
+  ],
+  "author": "Allisson José da Silva",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "dependencies": {}
+}
+

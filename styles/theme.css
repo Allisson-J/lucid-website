@@ -1,0 +1,260 @@
+/* ============================================
+   THEME - Modo Claro e Escuro
+   ============================================ */
+
+/* Variáveis para modo escuro (padrão) */
+:root {
+  /* Cores Principais */
+  --color-primary: #4da6ff;
+  --color-primary-dark: #3d8fcc;
+  --color-secondary: #6f7cff;
+  --color-accent: #00d4ff;
+  
+  /* Cores de Fundo - Modo Escuro */
+  --bg-primary: #0b0e14;
+  --bg-secondary: #121726;
+  --bg-tertiary: #1a1f2e;
+  --bg-card: #121726;
+  
+  /* Cores de Borda - Modo Escuro */
+  --border-color: #1f2430;
+  --border-color-light: #2a3142;
+  
+  /* Cores de Texto - Modo Escuro */
+  --text-primary: #e6e6e6;
+  --text-secondary: #b8c0cc;
+  --text-tertiary: #8a93a6;
+  --text-muted: #6b7280;
+  
+  /* Sombras - Modo Escuro */
+  --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 8px 24px rgba(77, 166, 255, 0.2);
+}
+
+/* Variáveis para modo claro */
+[data-theme="light"] {
+  /* Cores de Fundo - Modo Claro */
+  --bg-primary: #f5f7fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f0f2f5;
+  --bg-card: #ffffff;
+  
+  /* Cores de Borda - Modo Claro */
+  --border-color: #e1e8ed;
+  --border-color-light: #d0d7de;
+  
+  /* Cores de Texto - Modo Claro */
+  --text-primary: #1a1f2e;
+  --text-secondary: #4a5568;
+  --text-tertiary: #718096;
+  --text-muted: #a0aec0;
+  
+  /* Sombras - Modo Claro */
+  --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 24px rgba(77, 166, 255, 0.15);
+}
+
+/* Botão de alternar tema */
+.btn-theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: var(--font-family);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: var(--spacing-sm);
+}
+
+.btn-theme-toggle:hover {
+  border-color: var(--color-primary);
+  background: rgba(77, 166, 255, 0.1);
+  transform: rotate(15deg) scale(1.1);
+}
+
+.btn-theme-toggle:active {
+  transform: rotate(15deg) scale(0.95);
+}
+
+.theme-icon {
+  display: inline-block;
+  transition: transform var(--transition-base);
+}
+
+.btn-theme-toggle:hover .theme-icon {
+  transform: scale(1.2);
+}
+
+/* Transições suaves ao alternar tema */
+.crm-page,
+.crm-header,
+.crm-main,
+.stat-card,
+.status-card,
+.crm-table-container,
+.crm-table,
+.login-box,
+.card {
+  transition: background-color var(--transition-base),
+              border-color var(--transition-base),
+              color var(--transition-base);
+}
+
+/* Ajustes específicos para modo claro */
+[data-theme="light"] .crm-header {
+  background: var(--bg-secondary);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  border-bottom-color: var(--border-color-light);
+}
+
+[data-theme="light"] .crm-page {
+  background: var(--bg-primary);
+}
+
+[data-theme="light"] .stat-card {
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-color: var(--border-color-light);
+}
+
+[data-theme="light"] .status-card {
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: var(--border-color-light);
+}
+
+[data-theme="light"] .stat-card:hover,
+[data-theme="light"] .status-card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-primary);
+}
+
+[data-theme="light"] .crm-table-container {
+  background: var(--bg-card);
+  border-color: var(--border-color-light);
+}
+
+[data-theme="light"] .crm-table thead {
+  background: var(--bg-tertiary);
+  border-bottom-color: var(--border-color-light);
+}
+
+[data-theme="light"] .crm-table th {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .crm-table td {
+  color: var(--text-secondary);
+  border-bottom-color: var(--border-color-light);
+}
+
+[data-theme="light"] .crm-table tbody tr:hover {
+  background: rgba(77, 166, 255, 0.08);
+}
+
+[data-theme="light"] .search-input,
+[data-theme="light"] .filter-select,
+[data-theme="light"] .status-select {
+  background: var(--bg-secondary);
+  border-color: var(--border-color-light);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .search-input:focus,
+[data-theme="light"] .filter-select:focus,
+[data-theme="light"] .status-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
+}
+
+[data-theme="light"] .btn-logout {
+  border-color: var(--border-color-light);
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .btn-logout:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+[data-theme="light"] .empty-state {
+  color: var(--text-tertiary);
+}
+
+[data-theme="light"] .toast {
+  background: var(--bg-card);
+  border-color: var(--border-color-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .toast-message {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .message-modal-content {
+  background: var(--bg-card);
+  border-color: var(--border-color-light);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .message-modal-header,
+[data-theme="light"] .message-modal-footer {
+  border-color: var(--border-color-light);
+}
+
+[data-theme="light"] .message-modal-body p {
+  color: var(--text-secondary);
+}
+
+/* Badges e status no modo claro */
+[data-theme="light"] .status-badge-new {
+  background: rgba(77, 166, 255, 0.15);
+  border-color: rgba(77, 166, 255, 0.4);
+  color: #2563eb;
+}
+
+[data-theme="light"] .status-badge-contacted {
+  background: rgba(255, 193, 7, 0.15);
+  border-color: rgba(255, 193, 7, 0.4);
+  color: #d97706;
+}
+
+[data-theme="light"] .status-badge-qualified {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #16a34a;
+}
+
+[data-theme="light"] .status-badge-converted {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #15803d;
+}
+
+/* Status selects no modo claro */
+[data-theme="light"] .status-new {
+  border-color: rgba(77, 166, 255, 0.4);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+[data-theme="light"] .status-contacted {
+  border-color: rgba(255, 193, 7, 0.4);
+  background: rgba(255, 193, 7, 0.1);
+}
+
+[data-theme="light"] .status-qualified {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+[data-theme="light"] .status-converted {
+  border-color: rgba(34, 197, 94, 0.6);
+  background: rgba(34, 197, 94, 0.15);
+}
+

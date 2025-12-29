@@ -1,0 +1,73 @@
+/* ============================================
+   VARIÁVEIS CSS - Lucid
+   ============================================ */
+
+:root {
+  /* Cores Principais */
+  --color-primary: #4da6ff;
+  --color-primary-dark: #3d8fcc;
+  --color-secondary: #6f7cff;
+  --color-accent: #00d4ff;
+  
+  /* Cores de Fundo */
+  --bg-primary: #0b0e14;
+  --bg-secondary: #121726;
+  --bg-tertiary: #1a1f2e;
+  --bg-card: #121726;
+  
+  /* Cores de Borda */
+  --border-color: #1f2430;
+  --border-color-light: #2a3142;
+  
+  /* Cores de Texto */
+  --text-primary: #e6e6e6;
+  --text-secondary: #b8c0cc;
+  --text-tertiary: #8a93a6;
+  --text-muted: #6b7280;
+  
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, #4da6ff, #6f7cff);
+  --gradient-hero: linear-gradient(135deg, #4da6ff 0%, #6f7cff 50%, #00d4ff 100%);
+  
+  /* Tipografia */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Espaçamentos */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 80px;
+  
+  /* Bordas */
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  
+  /* Sombras */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 20px rgba(77, 166, 255, 0.3);
+  --shadow-tech: 0 0 30px rgba(77, 166, 255, 0.4), 0 0 60px rgba(111, 124, 255, 0.2);
+  --shadow-neon: 0 0 5px rgba(77, 166, 255, 0.5), 0 0 10px rgba(77, 166, 255, 0.5), 0 0 15px rgba(77, 166, 255, 0.5), 0 0 20px rgba(77, 166, 255, 0.5);
+  --shadow-glow-intense: 0 0 40px rgba(77, 166, 255, 0.6), 0 0 80px rgba(111, 124, 255, 0.4), 0 0 120px rgba(0, 212, 255, 0.2);
+  
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Breakpoints (para uso em JS) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+

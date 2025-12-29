@@ -1,0 +1,13 @@
+/* ============================================
+   MAIN.CSS - Arquivo Principal
+   Importa todos os outros arquivos CSS
+   ============================================ */
+
+@import url('./variables.css');
+@import url('./base.css');
+@import url('./components.css');
+@import url('./layout.css');
+@import url('./social-buttons.css');
+
+/* Estilos específicos adicionais podem ser adicionados aqui */
+

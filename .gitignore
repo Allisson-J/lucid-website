@@ -1,0 +1,57 @@
+# Dependências
+node_modules/
+package-lock.json
+yarn.lock
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Arquivos temporários
+*.tmp
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build (se adicionar no futuro)
+dist/
+build/
+.next/
+
+# Variáveis de ambiente (CRÍTICO - NUNCA commitar!)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Configuração Supabase (contém chaves sensíveis)
+# Estes arquivos são gerados automaticamente a partir do .env
+# ⚠️ IMPORTANTE: NUNCA commite estes arquivos - eles contêm chaves secretas!
+scripts/supabase-config.js
+scripts/app-config.js
+
+# Arquivos SQL de configuração (podem conter informações sensíveis)
+# Se precisar commitar SQLs de exemplo, use .example.sql
+*.sql
+!*.example.sql
+
+# Arquivos de documentação temporários/debug
+*-debug.md
+*-temp.md
+test-*.html
+test-*.js
+
+# Arquivos de backup
+*.bak
+*.backup
