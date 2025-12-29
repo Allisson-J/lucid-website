@@ -9,7 +9,7 @@
     "serve": "serve . -p ${PORT:-3000}",
     "setup": "node scripts/setup-config.js",
     "config": "node scripts/setup-config.js",
-    "postinstall": "npm run setup"
+    "postinstall": "node scripts/setup-config.js"
   },
   "keywords": [
     "lucid",

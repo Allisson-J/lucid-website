@@ -9,6 +9,7 @@ services:
     plan: free  # Ou 'starter', 'professional', etc.
     region: oregon  # Escolha a região mais próxima: oregon, frankfurt, singapore, mumbai, etc.
     buildCommand: npm install
+    # Ou use yarn: buildCommand: yarn install
     startCommand: npm start
     envVars:
       # Variáveis obrigatórias - configure estas no painel do Render
