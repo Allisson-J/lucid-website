@@ -1,0 +1,43 @@
+# Render Infrastructure as Code
+# Este arquivo define a configuração do serviço no Render
+# É opcional - você pode configurar tudo via painel web também
+
+services:
+  - type: web
+    name: lucid-website
+    env: node
+    plan: free  # Ou 'starter', 'professional', etc.
+    region: oregon  # Escolha a região mais próxima: oregon, frankfurt, singapore, mumbai, etc.
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      # Variáveis obrigatórias - configure estas no painel do Render
+      - key: SUPABASE_URL
+        sync: false  # Não sincronizar - configure manualmente
+      - key: SUPABASE_ANON_KEY
+        sync: false  # Não sincronizar - configure manualmente
+      # Variáveis opcionais (com valores padrão)
+      - key: WHATSAPP_NUMBER
+        value: "5581986919496"
+      - key: CONTACT_EMAIL
+        value: "lucid.suporte@gmail.com"
+      - key: INSTAGRAM_URL
+        value: "https://instagram.com/lucid.social"
+      - key: ADMIN_EMAIL
+        value: "admin@lucid.social"
+      - key: ADMIN_PASSWORD
+        sync: false  # Configure manualmente por segurança
+    # Health check path (opcional)
+    healthCheckPath: /
+    # Headers de segurança (opcional, mas recomendado)
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-XSS-Protection
+        value: 1; mode=block
+

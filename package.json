@@ -4,9 +4,9 @@
   "description": "Site institucional da Lucid Tecnologia",
   "main": "index.html",
   "scripts": {
-    "dev": "npx serve . -p 3000",
-    "start": "npx serve . -p 3000",
-    "serve": "npx serve . -p 3000",
+    "dev": "serve . -p 3000",
+    "start": "node server.js",
+    "serve": "serve . -p ${PORT:-3000}",
     "setup": "node scripts/setup-config.js",
     "config": "node scripts/setup-config.js",
     "postinstall": "npm run setup"
@@ -22,6 +22,8 @@
   "devDependencies": {
     "dotenv": "^16.3.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
 }
 

@@ -6,60 +6,82 @@
 const fs = require('fs');
 const path = require('path');
 
-// Ler arquivo .env
+// Ler variáveis de ambiente (arquivo .env ou process.env)
 function loadEnv() {
+  const env = {};
   const envPath = path.join(__dirname, '..', '.env');
   
-  
-  if (!fs.existsSync(envPath)) {
-    console.error('❌ Arquivo .env não encontrado!');
-    console.log('📝 Crie um arquivo .env baseado no .env.example');
-    console.log('   Execute: cp .env.example .env');
-    process.exit(1);
-  }
-
-  let envContent;
-  try {
-    // Tentar ler com diferentes encodings
-    envContent = fs.readFileSync(envPath, 'utf8');
-  } catch (e) {
+  // Primeiro, tentar carregar do arquivo .env (desenvolvimento local)
+  if (fs.existsSync(envPath)) {
+    console.log('📄 Carregando variáveis de ambiente do arquivo .env...');
+    
+    let envContent;
     try {
-      envContent = fs.readFileSync(envPath, 'latin1');
-    } catch (e2) {
-      envContent = fs.readFileSync(envPath);
+      // Tentar ler com diferentes encodings
+      envContent = fs.readFileSync(envPath, 'utf8');
+    } catch (e) {
+      try {
+        envContent = fs.readFileSync(envPath, 'latin1');
+      } catch (e2) {
+        envContent = fs.readFileSync(envPath);
+      }
     }
+    
+    // Remover BOM (Byte Order Mark) se existir
+    if (envContent.length > 0) {
+      if (envContent.charCodeAt(0) === 0xFEFF) {
+        envContent = envContent.slice(1);
+      } else if (envContent.length >= 3 && 
+                  envContent.charCodeAt(0) === 0xEF && 
+                  envContent.charCodeAt(1) === 0xBB && 
+                  envContent.charCodeAt(2) === 0xBF) {
+        envContent = envContent.slice(3);
+      }
+    }
+    
+    // Processar linha por linha, lidando com diferentes tipos de quebra de linha
+    const lines = envContent.split(/\r\n|\r|\n/);
+    
+    // Verificar se o split funcionou corretamente
+    if (lines.length === 1 && envContent.length > 100) {
+      // Tentar método alternativo
+      const altLines = envContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+      if (altLines.length > lines.length) {
+        parseEnvLines(altLines, env);
+      } else {
+        parseEnvLines(lines, env);
+      }
+    } else {
+      parseEnvLines(lines, env);
+    }
+  } else {
+    console.log('📄 Arquivo .env não encontrado, usando variáveis de ambiente do sistema...');
   }
   
-  // Remover BOM (Byte Order Mark) se existir
-  if (envContent.length > 0) {
-    if (envContent.charCodeAt(0) === 0xFEFF) {
-      envContent = envContent.slice(1);
-    } else if (envContent.length >= 3 && 
-                envContent.charCodeAt(0) === 0xEF && 
-                envContent.charCodeAt(1) === 0xBB && 
-                envContent.charCodeAt(2) === 0xBF) {
-      envContent = envContent.slice(3);
-    }
-  }
+  // Sobrescrever com variáveis de ambiente do sistema (produção - Render, etc.)
+  // process.env tem prioridade sobre o arquivo .env
+  const envVars = [
+    'SUPABASE_URL',
+    'SUPABASE_ANON_KEY',
+    'WHATSAPP_NUMBER',
+    'CONTACT_EMAIL',
+    'INSTAGRAM_URL',
+    'ADMIN_EMAIL',
+    'ADMIN_PASSWORD'
+  ];
   
-  const env = {};
+  envVars.forEach(key => {
+    if (process.env[key]) {
+      env[key] = process.env[key];
+    }
+  });
+  
+  return env;
+}
 
-  // Processar linha por linha, lidando com diferentes tipos de quebra de linha
-  // Suporta \n, \r\n, e \r - usar método mais robusto
-  const lines = envContent.split(/\r\n|\r|\n/);
-  
-  // Verificar se o split funcionou corretamente
-  if (lines.length === 1 && envContent.length > 100) {
-    // Tentar método alternativo
-    const altLines = envContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
-    if (altLines.length > lines.length) {
-      return loadEnvAlt(envPath, altLines);
-    }
-  }
-  
-  lines.forEach((line, index) => {
-    // Remover espaços em branco e caracteres especiais no início/fim
-    const originalLine = line;
+// Função auxiliar para processar linhas do arquivo .env
+function parseEnvLines(lines, env) {
+  lines.forEach((line) => {
     line = line.trim();
     
     // Ignorar comentários e linhas vazias
@@ -79,34 +101,8 @@ function loadEnv() {
       }
     }
   });
-  
-
-  return env;
 }
 
-// Função alternativa de parsing (fallback)
-function loadEnvAlt(envPath, lines) {
-  const env = {};
-  
-  lines.forEach((line, index) => {
-    const trimmed = line.trim();
-    
-    if (trimmed && !trimmed.startsWith('#')) {
-      const equalIndex = trimmed.indexOf('=');
-      if (equalIndex > 0) {
-        const key = trimmed.substring(0, equalIndex).trim();
-        const value = trimmed.substring(equalIndex + 1).trim();
-        const cleanValue = value.replace(/^["']|["']$/g, '');
-        
-        if (key && cleanValue) {
-          env[key] = cleanValue;
-        }
-      }
-    }
-  });
-  
-  return env;
-}
 
 // Gerar arquivo supabase-config.js
 function generateConfig(env) {
@@ -237,17 +233,20 @@ function getEmailUrl(subject, body) {
 
 // Executar
 try {
-  console.log('🔄 Carregando variáveis de ambiente do .env...');
+  console.log('🔄 Carregando variáveis de ambiente...');
   const env = loadEnv();
   
   
   // Validar variáveis obrigatórias
   if (!env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) {
-    console.error('\n❌ Variáveis obrigatórias não encontradas no .env:');
+    console.error('\n❌ Variáveis obrigatórias não encontradas:');
     if (!env.SUPABASE_URL) console.error('   - SUPABASE_URL');
     if (!env.SUPABASE_ANON_KEY) console.error('   - SUPABASE_ANON_KEY');
-    console.error('\n💡 Verifique se o arquivo .env está no diretório raiz do projeto.');
-    console.error('💡 Certifique-se de que as variáveis estão no formato: CHAVE=valor');
+    console.error('\n💡 Para desenvolvimento local:');
+    console.error('   Crie um arquivo .env no diretório raiz do projeto.');
+    console.error('   Formato: CHAVE=valor');
+    console.error('\n💡 Para produção (Render, etc.):');
+    console.error('   Configure as variáveis de ambiente no painel do serviço.');
     process.exit(1);
   }
 
