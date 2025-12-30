@@ -542,33 +542,64 @@
   }
 }
 
-/* Responsividade - Desabilitar efeitos pesados em mobile */
+/* Responsividade - Manter apenas efeitos leves em mobile */
 @media (max-width: 768px) {
-  /* Desabilitar completamente efeitos pesados que causam travamento */
-  .background-effects {
-    display: none; /* Desabilita todos os efeitos de background em mobile */
-  }
-  
-  /* Alternativa: Se quiser manter algo sutil, use isso ao invés de display: none
-  .particle,
-  .connection-line,
-  .geometric-shape,
-  .energy-wave,
-  .glow-particle,
-  .code-line,
-  .depth-layer,
-  .interactive-particle,
-  .light-ray,
-  .hexagon,
-  .data-wave,
-  .pulse-glow,
-  .star,
-  .circuit-line,
+  /* Desabilitar efeitos pesados que causam travamento */
+  .connection-lines,
+  .energy-waves,
   .scan-lines,
-  .advanced-grid {
+  .advanced-grid,
+  .code-lines,
+  .depth-layers,
+  .interactive-particles,
+  .light-rays,
+  .hexagon-grid,
+  .data-waves,
+  .pulsing-glow,
+  .circuit-lines {
     display: none;
   }
-  */
+  
+  /* Manter apenas partículas simples (reduzidas) */
+  .floating-particles .particle:nth-child(n+5) {
+    display: none; /* Mostra apenas 4 partículas */
+  }
+  
+  .particle {
+    width: 3px !important;
+    height: 3px !important;
+    opacity: 0.4;
+    animation-duration: 25s !important; /* Animações mais lentas = menos CPU */
+  }
+  
+  /* Manter formas geométricas simples (reduzidas) */
+  .geometric-shapes .geometric-shape:nth-child(n+3) {
+    display: none; /* Mostra apenas 2 formas */
+  }
+  
+  .geometric-shape {
+    opacity: 0.3;
+    animation-duration: 30s !important;
+  }
+  
+  /* Manter partículas de brilho simples */
+  .glow-particles .glow-particle:nth-child(n+2) {
+    display: none; /* Mostra apenas 1 */
+  }
+  
+  .glow-particle {
+    opacity: 0.3;
+    animation-duration: 20s !important;
+  }
+  
+  /* Manter estrelas (são leves) */
+  .twinkling-stars .star:nth-child(n+6) {
+    display: none; /* Mostra apenas 5 estrelas */
+  }
+  
+  .star {
+    opacity: 0.5;
+  }
 }
 
 /* Otimização para tablets - reduzir efeitos */

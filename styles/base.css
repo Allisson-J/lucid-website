@@ -83,15 +83,15 @@ body::after {
   100% { transform: rotate(360deg); }
 }
 
-/* Otimização mobile - Desabilitar animações pesadas */
+/* Otimização mobile - Reduzir animações pesadas mas manter visual */
 @media (max-width: 768px) {
   body {
     background-attachment: scroll; /* Remove background-attachment fixed que causa performance ruim */
   }
   
   body::before {
-    animation: none;
-    opacity: 0.2;
+    animation: grid-pulse 12s ease-in-out infinite; /* Animações mais lentas */
+    opacity: 0.3; /* Mais sutil */
   }
   
   body::after {
