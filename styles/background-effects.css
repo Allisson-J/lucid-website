@@ -542,19 +542,48 @@
   }
 }
 
-/* Responsividade - Reduzir efeitos em mobile */
+/* Responsividade - Desabilitar efeitos pesados em mobile */
 @media (max-width: 768px) {
+  /* Desabilitar completamente efeitos pesados que causam travamento */
+  .background-effects {
+    display: none; /* Desabilita todos os efeitos de background em mobile */
+  }
+  
+  /* Alternativa: Se quiser manter algo sutil, use isso ao invés de display: none
   .particle,
   .connection-line,
   .geometric-shape,
+  .energy-wave,
   .glow-particle,
-  .code-line {
-    opacity: 0.5;
+  .code-line,
+  .depth-layer,
+  .interactive-particle,
+  .light-ray,
+  .hexagon,
+  .data-wave,
+  .pulse-glow,
+  .star,
+  .circuit-line,
+  .scan-lines,
+  .advanced-grid {
+    display: none;
+  }
+  */
+}
+
+/* Otimização para tablets - reduzir efeitos */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .interactive-particle,
+  .hexagon,
+  .data-wave,
+  .circuit-line {
+    display: none;
   }
   
-  .energy-wave,
-  .depth-layer {
-    opacity: 0.3;
+  .particle,
+  .connection-line,
+  .geometric-shape {
+    opacity: 0.4;
   }
 }
 

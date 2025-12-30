@@ -83,6 +83,22 @@ body::after {
   100% { transform: rotate(360deg); }
 }
 
+/* Otimização mobile - Desabilitar animações pesadas */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll; /* Remove background-attachment fixed que causa performance ruim */
+  }
+  
+  body::before {
+    animation: none;
+    opacity: 0.2;
+  }
+  
+  body::after {
+    display: none; /* Remove o gradient rotativo pesado */
+  }
+}
+
 /* Tipografia */
 h1, h2, h3, h4, h5, h6 {
   font-weight: var(--font-weight-bold);
