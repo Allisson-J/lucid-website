@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   if (instagramBtn) {
-    const instagramUrl = typeof APP_CONFIG !== 'undefined' ? APP_CONFIG.instagramUrl : 'https://instagram.com/lucid.social';
+    const instagramUrl = typeof APP_CONFIG !== 'undefined' ? APP_CONFIG.instagramUrl : 'https://www.instagram.com/lucid_brasil/';
     instagramBtn.href = instagramUrl;
     // Estilos e animações são gerenciados via CSS (styles/social-buttons.css)
   }

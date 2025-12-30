@@ -899,3 +899,242 @@ section {
   }
 }
 
+/* ============================================
+   ESTATÍSTICAS / NÚMEROS
+   ============================================ */
+.stats-section {
+  background: var(--bg-secondary);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+}
+
+.stat-card-landing {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-xl);
+  text-align: center;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-landing::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.stat-card-landing:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 30px rgba(77, 166, 255, 0.2);
+}
+
+.stat-card-landing:hover::before {
+  transform: scaleX(1);
+}
+
+.stat-number-landing {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: var(--font-weight-bold);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--spacing-sm);
+  line-height: 1;
+}
+
+.stat-label-landing {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: var(--font-weight-normal);
+}
+
+/* ============================================
+   TECNOLOGIAS E FERRAMENTAS
+   ============================================ */
+.tech-section {
+  position: relative;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+}
+
+.tech-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  text-align: center;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.tech-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 30px rgba(77, 166, 255, 0.15);
+  background: rgba(77, 166, 255, 0.05);
+}
+
+.tech-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+  filter: drop-shadow(0 0 10px rgba(77, 166, 255, 0.5));
+}
+
+.tech-item h4 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-xs);
+}
+
+.tech-item p {
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Responsividade */
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+  
+  .stat-card-landing {
+    padding: var(--spacing-lg);
+  }
+  
+  .stat-number-landing {
+    font-size: 2rem;
+  }
+  
+  .tech-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+  
+  .tech-item {
+    padding: var(--spacing-md);
+  }
+  
+  .tech-icon {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================
+   FAQ - PERGUNTAS FREQUENTES
+   ============================================ */
+.faq-section {
+  background: var(--bg-primary);
+}
+
+.faq-grid {
+  display: grid;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-2xl);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.faq-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.faq-item:hover {
+  border-color: var(--color-primary);
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  user-select: none;
+}
+
+.faq-question h4 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  flex: 1;
+}
+
+.faq-toggle {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  transition: transform var(--transition-base);
+  min-width: 30px;
+  text-align: center;
+}
+
+.faq-item.active .faq-toggle {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  padding: 0 var(--spacing-lg);
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+  padding: 0 var(--spacing-lg) var(--spacing-lg);
+}
+
+.faq-answer p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Responsividade FAQ */
+@media (max-width: 767px) {
+  .faq-question {
+    padding: var(--spacing-md);
+  }
+  
+  .faq-question h4 {
+    font-size: 1rem;
+    padding-right: var(--spacing-sm);
+  }
+  
+  .faq-answer {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .faq-item.active .faq-answer {
+    padding: 0 var(--spacing-md) var(--spacing-md);
+  }
+}
+

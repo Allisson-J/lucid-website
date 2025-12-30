@@ -209,7 +209,7 @@ const APP_CONFIG = {
   // Contato
   whatsappNumber: '${env.WHATSAPP_NUMBER || '5581986919496'}',
   contactEmail: '${env.CONTACT_EMAIL || 'lucid.suporte@gmail.com'}',
-  instagramUrl: '${env.INSTAGRAM_URL || 'https://instagram.com/lucid.social'}',
+  instagramUrl: '${env.INSTAGRAM_URL || 'https://www.instagram.com/lucid_brasil/'}',
   
   // Autenticação (credenciais padrão para desenvolvimento)
   defaultAdminEmail: '${env.ADMIN_EMAIL || 'admin@lucid.social'}',

@@ -23,7 +23,7 @@ services:
       - key: CONTACT_EMAIL
         value: "lucid.suporte@gmail.com"
       - key: INSTAGRAM_URL
-        value: "https://instagram.com/lucid.social"
+        value: "https://www.instagram.com/lucid_brasil/"
       - key: ADMIN_EMAIL
         value: "lucid.suporte@gmail.com"
       - key: ADMIN_PASSWORD
