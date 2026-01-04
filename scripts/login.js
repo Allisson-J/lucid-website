@@ -3,10 +3,10 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', async function() {
-  // Se já estiver autenticado, redirecionar para CRM
+  // Se já estiver autenticado, redirecionar para Portal
   const authenticated = await isAuthenticated();
   if (authenticated) {
-    window.location.href = 'crm.html';
+    window.location.href = 'portal.html';
     return;
   }
 
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (result.success) {
       showMessage(result.message, 'success');
       setTimeout(() => {
-        window.location.href = 'crm.html';
+        window.location.href = 'portal.html';
       }, 1000);
     } else {
       showMessage(result.message, 'error');

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Documentações | Lucid</title>
+
+  <meta name="description" content="Documentação da Plataforma Lucid - Guias, tutoriais e informações sobre todas as funcionalidades.">
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/documentacoes.css">
+</head>
+<body class="documentacoes-page">
+
+  <!-- Header Documentações -->
+  <header class="documentacoes-header">
+    <div class="documentacoes-header-content">
+      <div class="documentacoes-logo">
+        <a href="portal.html">
+          <h1>LUCID</h1>
+        </a>
+        <span class="documentacoes-badge">Documentações</span>
+      </div>
+      
+      <nav class="documentacoes-nav">
+        <a href="portal.html" class="nav-link-portal">
+          <i class="fas fa-home"></i>
+          <span>Portal</span>
+        </a>
+        <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <span class="user-info" id="userInfo"></span>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="documentacoes-main">
+    <div class="documentacoes-container">
+      
+      <!-- Hero Section -->
+      <div class="doc-hero">
+        <h1>📚 Documentação da Plataforma Lucid</h1>
+        <p>Guia completo sobre todas as funcionalidades, ferramentas e recursos disponíveis</p>
+      </div>
+
+      <!-- Sidebar Navigation -->
+      <div class="doc-layout">
+        <aside class="doc-sidebar">
+          <nav class="doc-nav">
+            <a href="#introducao" class="doc-nav-link active">
+              <i class="fas fa-rocket"></i>
+              <span>Introdução</span>
+            </a>
+            <a href="#projetos" class="doc-nav-link">
+              <i class="fas fa-project-diagram"></i>
+              <span>Projetos</span>
+            </a>
+            <a href="#crm" class="doc-nav-link">
+              <i class="fas fa-user-friends"></i>
+              <span>CRM</span>
+            </a>
+            <a href="#automacoes" class="doc-nav-link">
+              <i class="fas fa-robot"></i>
+              <span>Automações</span>
+            </a>
+            <a href="#portal" class="doc-nav-link">
+              <i class="fas fa-home"></i>
+              <span>Portal</span>
+            </a>
+            <a href="#chat-ia" class="doc-nav-link">
+              <i class="fas fa-comments"></i>
+              <span>Chat IA</span>
+            </a>
+            <a href="#faq" class="doc-nav-link">
+              <i class="fas fa-question-circle"></i>
+              <span>FAQ</span>
+            </a>
+          </nav>
+        </aside>
+
+        <!-- Content Area -->
+        <div class="doc-content">
+          
+          <!-- Introdução -->
+          <section id="introducao" class="doc-section">
+            <h2><i class="fas fa-rocket"></i> Introdução à Plataforma Lucid</h2>
+            <div class="doc-card">
+              <h3>Bem-vindo à Lucid</h3>
+              <p>A Lucid é uma plataforma completa de gestão empresarial que integra:</p>
+              <ul>
+                <li><strong>Gerenciamento de Projetos</strong> - Organize projetos, equipes, prazos e entregas</li>
+                <li><strong>CRM</strong> - Gerencie leads, clientes e oportunidades de negócio</li>
+                <li><strong>Automações</strong> - Crie e gerencie automações de processos (Python, Power Automate, VBA, N8N)</li>
+                <li><strong>Assistente IA</strong> - Chat inteligente para dúvidas e auxílio</li>
+              </ul>
+              <h4>Tecnologias Utilizadas</h4>
+              <div class="tech-badges">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Power Automate</span>
+                <span class="tech-badge">VBA</span>
+                <span class="tech-badge">N8N</span>
+                <span class="tech-badge">Supabase</span>
+                <span class="tech-badge">JavaScript</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Projetos -->
+          <section id="projetos" class="doc-section">
+            <h2><i class="fas fa-project-diagram"></i> Gerenciamento de Projetos</h2>
+            
+            <div class="doc-card">
+              <h3>Visão Geral</h3>
+              <p>O sistema de projetos permite gerenciar completamente o ciclo de vida dos seus projetos, desde o planejamento até a conclusão.</p>
+            </div>
+
+            <div class="doc-card">
+              <h3>Funcionalidades Principais</h3>
+              <ul>
+                <li><strong>Visualizações Múltiplas:</strong> Grid, Kanban, Gantt, Calendário e Timeline</li>
+                <li><strong>Status de Projetos:</strong> Planejamento, Em Andamento, Pausado, Concluído, Cancelado</li>
+                <li><strong>Prioridades:</strong> Baixa, Normal, Alta, Urgente</li>
+                <li><strong>Gestão de Equipe:</strong> Adicione membros aos projetos</li>
+                <li><strong>Filtros e Busca:</strong> Encontre projetos rapidamente</li>
+              </ul>
+            </div>
+
+            <div class="doc-card">
+              <h3>Como Criar um Projeto</h3>
+              <ol>
+                <li>Acesse a página de <strong>Projetos</strong> no portal</li>
+                <li>Clique no botão <strong>"Novo Projeto"</strong></li>
+                <li>Preencha os campos:
+                  <ul>
+                    <li>Nome do projeto (obrigatório)</li>
+                    <li>Descrição</li>
+                    <li>Cliente (opcional)</li>
+                    <li>Data de início e fim</li>
+                    <li>Status e prioridade</li>
+                  </ul>
+                </li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+              </ol>
+            </div>
+
+            <div class="doc-card">
+              <h3>Visualizações Disponíveis</h3>
+              <div class="feature-list">
+                <div class="feature-item">
+                  <h4><i class="fas fa-th"></i> Grid</h4>
+                  <p>Visualização em grade com cards de projetos, ideal para visão geral rápida</p>
+                </div>
+                <div class="feature-item">
+                  <h4><i class="fas fa-columns"></i> Kanban</h4>
+                  <p>Organize projetos em colunas por status, arraste e solte para mudar status</p>
+                </div>
+                <div class="feature-item">
+                  <h4><i class="fas fa-chart-gantt"></i> Gantt</h4>
+                  <p>Visualização temporal com barras de tempo, perfeito para gerenciar prazos</p>
+                </div>
+                <div class="feature-item">
+                  <h4><i class="fas fa-calendar-alt"></i> Calendário</h4>
+                  <p>Veja projetos organizados por data em formato de calendário mensal</p>
+                </div>
+                <div class="feature-item">
+                  <h4><i class="fas fa-clock"></i> Timeline</h4>
+                  <p>Linha do tempo visual mostrando a sequência temporal dos projetos</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CRM -->
+          <section id="crm" class="doc-section">
+            <h2><i class="fas fa-user-friends"></i> CRM - Gestão de Leads e Clientes</h2>
+            
+            <div class="doc-card">
+              <h3>Visão Geral</h3>
+              <p>O CRM (Customer Relationship Management) permite gerenciar todo o funil de vendas, desde leads que chegam pelo formulário de contato até a conversão em clientes.</p>
+            </div>
+
+            <div class="doc-card">
+              <h3>Status de Leads</h3>
+              <div class="status-list">
+                <div class="status-item">
+                  <span class="status-badge status-new">🆕 Novo</span>
+                  <p>Leads recém-cadastrados que ainda não foram contatados</p>
+                </div>
+                <div class="status-item">
+                  <span class="status-badge status-contacted">📞 Contatado</span>
+                  <p>Leads que já receberam um primeiro contato</p>
+                </div>
+                <div class="status-item">
+                  <span class="status-badge status-qualified">⭐ Qualificado</span>
+                  <p>Leads qualificados e com interesse confirmado</p>
+                </div>
+                <div class="status-item">
+                  <span class="status-badge status-converted">✅ Convertido</span>
+                  <p>Leads que se tornaram clientes</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="doc-card">
+              <h3>Funcionalidades</h3>
+              <ul>
+                <li><strong>Gestão de Status:</strong> Mude o status dos leads conforme avançam no funil</li>
+                <li><strong>Filtros:</strong> Filtre por status ou busque por nome, email ou telefone</li>
+                <li><strong>Exportação:</strong> Exporte todos os leads em formato CSV</li>
+                <li><strong>Estatísticas:</strong> Dashboard com métricas de leads por status</li>
+              </ul>
+            </div>
+
+            <div class="doc-card">
+              <h3>Como Marcar um Lead como Convertido</h3>
+              <ol>
+                <li>Acesse a página do <strong>CRM</strong></li>
+                <li>Localize o lead na tabela</li>
+                <li>Clique no botão <strong>✅ (Ganhar)</strong> na coluna de ações</li>
+                <li>O lead será marcado automaticamente como "Convertido"</li>
+              </ol>
+            </div>
+          </section>
+
+          <!-- Automações -->
+          <section id="automacoes" class="doc-section">
+            <h2><i class="fas fa-robot"></i> Sistema de Automações</h2>
+            
+            <div class="doc-card">
+              <h3>Visão Geral</h3>
+              <p>O sistema de automações permite criar, gerenciar e monitorar automações de processos usando diferentes tecnologias.</p>
+            </div>
+
+            <div class="doc-card">
+              <h3>Tipos de Automação Suportados</h3>
+              <div class="automation-types">
+                <div class="automation-type">
+                  <h4>🐍 Python</h4>
+                  <p>Scripts e automações desenvolvidas em Python</p>
+                </div>
+                <div class="automation-type">
+                  <h4>⚡ Power Automate</h4>
+                  <p>Fluxos e automações criadas no Microsoft Power Automate</p>
+                </div>
+                <div class="automation-type">
+                  <h4>📊 VBA</h4>
+                  <p>Macros e automações em Visual Basic for Applications</p>
+                </div>
+                <div class="automation-type">
+                  <h4>🔄 N8N</h4>
+                  <p>Workflows criados na plataforma N8N</p>
+                </div>
+                <div class="automation-type">
+                  <h4>🔧 Outro</h4>
+                  <p>Outras tecnologias de automação</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="doc-card">
+              <h3>Status de Automações</h3>
+              <ul>
+                <li><strong>Ativa:</strong> Automação em execução normal</li>
+                <li><strong>Inativa:</strong> Automação desabilitada temporariamente</li>
+                <li><strong>Pausada:</strong> Automação pausada manualmente</li>
+                <li><strong>Erro:</strong> Automação com problemas de execução</li>
+              </ul>
+            </div>
+
+            <div class="doc-card">
+              <h3>Como Criar uma Automação</h3>
+              <ol>
+                <li>Acesse a página de <strong>Automações</strong></li>
+                <li>Clique em <strong>"Nova Automação"</strong></li>
+                <li>Preencha:
+                  <ul>
+                    <li>Nome da automação</li>
+                    <li>Descrição (opcional)</li>
+                    <li>Tipo (Python, Power Automate, VBA, N8N, Outro)</li>
+                    <li>Status inicial</li>
+                    <li>Agendamento (ex: "Diário às 9h")</li>
+                    <li>Configurações em JSON (opcional)</li>
+                  </ul>
+                </li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+              </ol>
+            </div>
+          </section>
+
+          <!-- Portal -->
+          <section id="portal" class="doc-section">
+            <h2><i class="fas fa-home"></i> Portal Central</h2>
+            
+            <div class="doc-card">
+              <h3>Visão Geral</h3>
+              <p>O portal central é o ponto de entrada para todas as ferramentas e funcionalidades da plataforma Lucid.</p>
+            </div>
+
+            <div class="doc-card">
+              <h3>Funcionalidades do Portal</h3>
+              <ul>
+                <li><strong>Dashboard:</strong> Visão geral com métricas principais (projetos, usuários, automações)</li>
+                <li><strong>Acesso Rápido:</strong> Cards clicáveis para acessar todas as ferramentas</li>
+                <li><strong>Navegação:</strong> Menu de navegação rápida entre módulos</li>
+                <li><strong>Personalização:</strong> Tema claro/escuro configurável</li>
+              </ul>
+            </div>
+
+            <div class="doc-card">
+              <h3>Ferramentas Disponíveis</h3>
+              <div class="tools-grid">
+                <div class="tool-card">
+                  <i class="fas fa-project-diagram"></i>
+                  <h4>Projetos</h4>
+                  <p>Gerencie projetos, equipes e prazos</p>
+                </div>
+                <div class="tool-card">
+                  <i class="fas fa-user-friends"></i>
+                  <h4>CRM</h4>
+                  <p>Gestão de leads e clientes</p>
+                </div>
+                <div class="tool-card">
+                  <i class="fas fa-robot"></i>
+                  <h4>Automações</h4>
+                  <p>Crie e gerencie automações</p>
+                </div>
+                <div class="tool-card">
+                  <i class="fas fa-comments"></i>
+                  <h4>Chat IA</h4>
+                  <p>Assistente inteligente</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Chat IA -->
+          <section id="chat-ia" class="doc-section">
+            <h2><i class="fas fa-comments"></i> Chat IA - Assistente Inteligente</h2>
+            
+            <div class="doc-card">
+              <h3>Visão Geral</h3>
+              <p>O Chat IA é um assistente inteligente que ajuda você com dúvidas sobre a plataforma, projetos, automações e muito mais.</p>
+            </div>
+
+            <div class="doc-card">
+              <h3>O que você pode perguntar</h3>
+              <ul>
+                <li><strong>Sobre seus projetos:</strong> "Como está minha agenda?", "O que preciso fazer amanhã?"</li>
+                <li><strong>Dicas de organização:</strong> "Teria alguma dica para eu não me perder?", "Como organizar melhor?"</li>
+                <li><strong>Sobre a plataforma:</strong> "Quais funcionalidades tem?", "Como usar o CRM?"</li>
+                <li><strong>Status e prazos:</strong> "Quais projetos estão atrasados?", "Quando vence o projeto X?"</li>
+              </ul>
+            </div>
+
+            <div class="doc-card">
+              <h3>Recursos do Chat IA</h3>
+              <ul>
+                <li><strong>Contexto Inteligente:</strong> O assistente entende o contexto dos seus projetos</li>
+                <li><strong>Conversa Natural:</strong> Fale de forma natural, como conversaria com um colega</li>
+                <li><strong>Personalização:</strong> O assistente conhece seu nome e personaliza as respostas</li>
+                <li><strong>Entendimento de Sinônimos:</strong> Entende "agenda" como projetos/prazos, etc.</li>
+              </ul>
+            </div>
+
+            <div class="doc-card tip-card">
+              <h3>💡 Dica</h3>
+              <p>Você pode acessar o Chat IA a partir de qualquer página da plataforma. Ele está sempre disponível para ajudar!</p>
+            </div>
+          </section>
+
+          <!-- FAQ -->
+          <section id="faq" class="doc-section">
+            <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes (FAQ)</h2>
+            
+            <div class="faq-list">
+              <div class="faq-item">
+                <h3>Como faço login na plataforma?</h3>
+                <p>Use suas credenciais (email e senha) na página de login. Se ainda não tem uma conta, entre em contato com o administrador.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Os dados são salvos na nuvem?</h3>
+                <p>Sim! A plataforma usa Supabase para armazenar dados na nuvem. Os dados são sincronizados automaticamente.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Posso usar a plataforma offline?</h3>
+                <p>Algumas funcionalidades básicas funcionam offline usando localStorage, mas para acesso completo aos dados, é necessário conexão com a internet.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Como exporto meus dados?</h3>
+                <p>No CRM, você pode exportar leads em CSV. Para projetos e automações, os dados estão sempre disponíveis na plataforma e podem ser visualizados a qualquer momento.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Posso personalizar a plataforma?</h3>
+                <p>Sim! Você pode alternar entre tema claro e escuro em qualquer página. As preferências são salvas automaticamente.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>O Chat IA usa minha API do OpenAI?</h3>
+                <p>Sim, se configurada. O Chat IA usa a API do OpenAI para respostas mais inteligentes. Se não houver API configurada, usa respostas pré-definidas baseadas no contexto.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Como adiciono membros a um projeto?</h3>
+                <p>Na página de Projetos, clique em um projeto para editar, depois clique em "Adicionar Membro" e preencha os dados do membro da equipe.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Posso deletar projetos ou automações?</h3>
+                <p>Sim, você pode deletar projetos e automações através dos botões de ação nas respectivas páginas. A ação é irreversível, então tenha certeza antes de confirmar.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Contato -->
+          <section id="contato" class="doc-section">
+            <div class="doc-card contact-card">
+              <h3>📧 Precisa de Ajuda?</h3>
+              <p>Se você tiver dúvidas adicionais ou precisar de suporte, entre em contato:</p>
+              <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> Email: lucid.suporte@gmail.com</p>
+                <p><i class="fab fa-instagram"></i> Instagram: <a href="https://www.instagram.com/lucid_brasil/" target="_blank">@lucid_brasil</a></p>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/app-config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/documentacoes.js"></script>
+</body>
+</html>
+

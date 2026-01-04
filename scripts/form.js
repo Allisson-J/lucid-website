@@ -68,6 +68,29 @@ async function saveLead(formData) {
         }
 
         console.log('✅ Lead salvo no Supabase com sucesso!', data);
+        
+        // Criar notificação para todos os usuários sobre novo lead
+        // Nota: Em produção, isso deve ser feito server-side via webhook/trigger
+        if (typeof createNotification === 'function' && typeof getAllUsersForNotifications === 'function') {
+          try {
+            const users = await getAllUsersForNotifications();
+            for (const user of users) {
+              if (user.id) {
+                await createNotification(
+                  user.id,
+                  'lead_novo',
+                  'Novo Lead Recebido',
+                  `${formData.name} enviou uma mensagem pelo formulário de contato`,
+                  'crm.html',
+                  { leadId: data[0]?.id || null, leadName: formData.name }
+                );
+              }
+            }
+          } catch (error) {
+            console.warn('⚠️ Erro ao criar notificações:', error);
+          }
+        }
+        
         return Promise.resolve();
       } catch (error) {
         console.error('❌ Erro ao salvar no Supabase, usando localStorage como fallback:', error);

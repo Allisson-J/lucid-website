@@ -1,0 +1,217 @@
+/* ============================================
+   COMENTÁRIOS - Estilos para Sistema de Comentários
+   ============================================ */
+
+/* Comments List */
+.comments-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: var(--spacing-lg);
+  padding-right: var(--spacing-xs);
+}
+
+.comments-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.comments-list::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 3px;
+}
+
+.comments-list::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+/* Empty State */
+.comments-empty {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--text-secondary);
+}
+
+.comments-empty i {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.comments-empty p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Comment Item */
+.comment-item {
+  background: rgba(18, 23, 38, 0.5);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  transition: all var(--transition-base);
+}
+
+.comment-item:hover {
+  border-color: rgba(77, 166, 255, 0.4);
+  background: rgba(18, 23, 38, 0.7);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-sm);
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
+.comment-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.comment-author-name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.comment-date {
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+}
+
+.comment-text {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.comment-text .mention {
+  background: rgba(77, 166, 255, 0.2);
+  color: var(--color-primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.comment-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all var(--transition-base);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-item:hover .comment-delete {
+  opacity: 1;
+}
+
+.comment-delete:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+/* Comment Form */
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(77, 166, 255, 0.2);
+}
+
+.comment-form textarea {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  resize: none;
+  min-height: 80px;
+  max-height: 200px;
+  transition: all var(--transition-base);
+}
+
+.comment-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
+}
+
+.comment-form textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.comment-form button {
+  align-self: flex-end;
+  min-width: 120px;
+}
+
+/* Botão de Comentários no Card */
+.btn-comments {
+  background: rgba(77, 166, 255, 0.1);
+  color: var(--color-primary);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+}
+
+.btn-comments:hover {
+  background: rgba(77, 166, 255, 0.2);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .comments-list {
+    max-height: 300px;
+  }
+  
+  .comment-item {
+    padding: var(--spacing-sm);
+  }
+  
+  .comment-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+  
+  .comment-author-name {
+    font-size: 0.85rem;
+  }
+  
+  .comment-text {
+    font-size: 0.85rem;
+  }
+}
+

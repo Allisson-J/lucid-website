@@ -67,7 +67,8 @@ function loadEnv() {
     'CONTACT_EMAIL',
     'INSTAGRAM_URL',
     'ADMIN_EMAIL',
-    'ADMIN_PASSWORD'
+    'ADMIN_PASSWORD',
+    'OPENAI_API_KEY'
   ];
   
   envVars.forEach(key => {
@@ -213,7 +214,10 @@ const APP_CONFIG = {
   
   // Autenticação (credenciais padrão para desenvolvimento)
   defaultAdminEmail: '${env.ADMIN_EMAIL || 'admin@lucid.social'}',
-  defaultAdminPassword: '${env.ADMIN_PASSWORD || 'admin123'}'
+  defaultAdminPassword: '${env.ADMIN_PASSWORD || 'admin123'}',
+  
+  // OpenAI (para Chat com IA)
+  openaiApiKey: '${env.OPENAI_API_KEY || ''}'
 };
 
 // Função para obter URL do WhatsApp

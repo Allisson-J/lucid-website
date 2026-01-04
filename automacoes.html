@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Automações | Lucid</title>
+
+  <meta name="description" content="Sistema de Automações Lucid - Gerencie suas automações de processos.">
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/automacoes.css">
+</head>
+<body class="automacoes-page">
+
+  <!-- Header Automações -->
+  <header class="automacoes-header">
+    <div class="automacoes-header-content">
+      <div class="automacoes-logo">
+        <a href="portal.html">
+          <h1>LUCID</h1>
+        </a>
+        <span class="automacoes-badge">Automações</span>
+      </div>
+      
+      <nav class="automacoes-nav">
+        <a href="portal.html" class="nav-link-portal">
+          <i class="fas fa-home"></i>
+          <span>Portal</span>
+        </a>
+        <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <span class="user-info" id="userInfo"></span>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="automacoes-main">
+    <div class="automacoes-container">
+      
+      <!-- Dashboard Stats -->
+      <div class="automacoes-stats">
+        <div class="stat-card">
+          <div class="stat-icon">🤖</div>
+          <div class="stat-content">
+            <h3 id="totalAutomacoes">0</h3>
+            <p>Total de Automações</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-content">
+            <h3 id="ativasAutomacoes">0</h3>
+            <p>Ativas</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-content">
+            <h3 id="totalExecucoes">0</h3>
+            <p>Total de Execuções</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-content">
+            <h3 id="taxaSucesso">-</h3>
+            <p>Taxa de Sucesso</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard por Tipo -->
+      <div class="automacoes-stats-status">
+        <div class="stat-status-card" onclick="filterByType('python')">
+          <div class="stat-status-icon">🐍</div>
+          <div class="stat-status-content">
+            <h3 id="countPython">0</h3>
+            <p>Python</p>
+          </div>
+        </div>
+        <div class="stat-status-card" onclick="filterByType('power_automate')">
+          <div class="stat-status-icon">⚡</div>
+          <div class="stat-status-content">
+            <h3 id="countPowerAutomate">0</h3>
+            <p>Power Automate</p>
+          </div>
+        </div>
+        <div class="stat-status-card" onclick="filterByType('vba')">
+          <div class="stat-status-icon">📊</div>
+          <div class="stat-status-content">
+            <h3 id="countVBA">0</h3>
+            <p>VBA</p>
+          </div>
+        </div>
+        <div class="stat-status-card" onclick="filterByType('n8n')">
+          <div class="stat-status-icon">🔄</div>
+          <div class="stat-status-content">
+            <h3 id="countN8N">0</h3>
+            <p>N8N</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters and Actions -->
+      <div class="automacoes-filters">
+        <div class="filter-group">
+          <input type="text" id="searchInput" class="search-input" placeholder="Buscar automações...">
+          <select id="filterStatus" class="filter-select">
+            <option value="all">Todos os Status</option>
+            <option value="ativa">Ativa</option>
+            <option value="inativa">Inativa</option>
+            <option value="pausada">Pausada</option>
+            <option value="erro">Erro</option>
+          </select>
+          <select id="filterTipo" class="filter-select">
+            <option value="all">Todos os Tipos</option>
+            <option value="python">Python</option>
+            <option value="power_automate">Power Automate</option>
+            <option value="vba">VBA</option>
+            <option value="n8n">N8N</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+        <button id="btnNovaAutomacao" class="btn-primary">
+          <i class="fas fa-plus"></i>
+          Nova Automação
+        </button>
+      </div>
+
+      <!-- Automações Table -->
+      <div class="automacoes-table-container">
+        <table class="automacoes-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Status</th>
+              <th>Agendamento</th>
+              <th>Última Execução</th>
+              <th>Execuções</th>
+              <th>Taxa Sucesso</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="automacoesTableBody">
+            <tr>
+              <td colspan="8" class="empty-state">
+                <p>Nenhuma automação encontrada. Crie sua primeira automação!</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Nova/Editar Automação -->
+  <div id="automacaoModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Nova Automação</h2>
+        <button id="modalClose" class="btn-close-modal">&times;</button>
+      </div>
+      <form id="automacaoForm" class="modal-body">
+        <div class="form-group">
+          <label for="automacaoNome">Nome *</label>
+          <input type="text" id="automacaoNome" name="nome" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="automacaoDescricao">Descrição</label>
+          <textarea id="automacaoDescricao" name="descricao" rows="3"></textarea>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="automacaoTipo">Tipo *</label>
+            <select id="automacaoTipo" name="tipo" required>
+              <option value="">Selecione...</option>
+              <option value="python">🐍 Python</option>
+              <option value="power_automate">⚡ Power Automate</option>
+              <option value="vba">📊 VBA</option>
+              <option value="n8n">🔄 N8N</option>
+              <option value="outro">🔧 Outro</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="automacaoStatus">Status *</label>
+            <select id="automacaoStatus" name="status" required>
+              <option value="ativa">✅ Ativa</option>
+              <option value="inativa">⏸️ Inativa</option>
+              <option value="pausada">⏸️ Pausada</option>
+              <option value="erro">❌ Erro</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="automacaoAgendamento">Agendamento</label>
+          <input type="text" id="automacaoAgendamento" name="agendamento" placeholder="Ex: Diário às 9h, Toda segunda-feira, etc.">
+        </div>
+        
+        <div class="form-group">
+          <label for="automacaoConfiguracoes">Configurações (JSON)</label>
+          <textarea id="automacaoConfiguracoes" name="configuracoes" rows="4" placeholder='{"key": "value"}'></textarea>
+          <small>Configurações específicas da automação em formato JSON (opcional)</small>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" id="btnCancel" class="btn-secondary">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/app-config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/automacoes.js"></script>
+</body>
+</html>
+

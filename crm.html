@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/theme.css">
   <link rel="stylesheet" href="styles/crm.css">
+  <link rel="stylesheet" href="styles/notificacoes.css">
 </head>
 
 <body class="crm-page">
@@ -31,6 +32,17 @@
       </div>
       
       <nav class="crm-nav">
+        <!-- Notificações -->
+        <div class="notification-wrapper">
+          <button id="notificationButton" class="btn-notification" title="Notificações">
+            <i class="fas fa-bell"></i>
+            <span id="notificationBadge" class="notification-badge" style="display: none;">
+              <span id="notificationCount">0</span>
+            </span>
+          </button>
+          <div id="notificationDropdown" class="notification-dropdown"></div>
+        </div>
+        
         <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
           <span class="theme-icon" id="themeIcon">🌙</span>
         </button>
@@ -183,6 +195,23 @@
     </div>
   </main>
 
+  <!-- Modal Centro de Notificações -->
+  <div id="notificationCenterModal" class="modal modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Notificações</h2>
+        <button class="modal-close" onclick="if (typeof closeNotificationCenter === 'function') closeNotificationCenter()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="notificationCenterList" class="notification-center-list">
+          <!-- Notificações serão renderizadas aqui -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Supabase JS - DEVE ser carregado ANTES de supabase-config.js -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   
@@ -190,6 +219,7 @@
   <script src="scripts/supabase-config.js"></script>
   <script src="scripts/app-config.js"></script>
   <script src="scripts/auth.js"></script>
+  <script src="scripts/notificacoes.js"></script>
   <script src="scripts/crm.js"></script>
 
 </body>

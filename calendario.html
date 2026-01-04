@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendário | Lucid</title>
+
+  <meta name="description" content="Calendário Compartilhado - Lucid - Gerencie eventos, prazos e reuniões.">
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/crm.css">
+  <link rel="stylesheet" href="styles/calendario.css">
+</head>
+
+<body class="calendario-page">
+  
+  <!-- Header -->
+  <header class="crm-header">
+    <div class="crm-header-content">
+      <div class="crm-logo">
+        <a href="portal.html">
+          <h1>LUCID</h1>
+        </a>
+        <span class="crm-badge">Calendário</span>
+      </div>
+      
+      <nav class="crm-nav">
+        <!-- Notificações -->
+        <div class="notification-wrapper">
+          <button id="notificationButton" class="btn-notification" title="Notificações">
+            <i class="fas fa-bell"></i>
+            <span id="notificationBadge" class="notification-badge" style="display: none;">
+              <span id="notificationCount">0</span>
+            </span>
+          </button>
+          <div id="notificationDropdown" class="notification-dropdown"></div>
+        </div>
+        
+        <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <a href="portal.html" class="nav-link-portal">
+          <i class="fas fa-home"></i>
+          <span>Portal</span>
+        </a>
+        <span class="user-info" id="userInfo"></span>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="crm-main">
+    <div class="crm-container">
+      
+      <!-- Header Actions -->
+      <div class="calendario-header">
+        <div>
+          <h2 class="section-title">Calendário Compartilhado</h2>
+          <p class="section-subtitle">Gerencie eventos, prazos e reuniões em um só lugar</p>
+        </div>
+        <button class="btn btn-primary" id="btnNovoEvento">
+          <i class="fas fa-plus"></i>
+          Novo Evento
+        </button>
+      </div>
+
+      <!-- Filtros e Visualizações -->
+      <div class="calendario-controls">
+        <div class="calendario-view-buttons">
+          <button class="view-btn active" data-view="month" id="viewMonth">
+            <i class="fas fa-calendar-alt"></i>
+            Mês
+          </button>
+          <button class="view-btn" data-view="week" id="viewWeek">
+            <i class="fas fa-calendar-week"></i>
+            Semana
+          </button>
+          <button class="view-btn" data-view="day" id="viewDay">
+            <i class="fas fa-calendar-day"></i>
+            Dia
+          </button>
+          <button class="view-btn" data-view="list" id="viewList">
+            <i class="fas fa-list"></i>
+            Lista
+          </button>
+        </div>
+        
+        <div class="calendario-filters">
+          <select id="filterTipo" class="filter-select">
+            <option value="all">Todos os Tipos</option>
+            <option value="projeto">Projetos</option>
+            <option value="equipe">Equipes</option>
+            <option value="reuniao">Reuniões</option>
+            <option value="evento_pessoal">Pessoal</option>
+            <option value="prazo">Prazos</option>
+            <option value="lembrete">Lembretes</option>
+          </select>
+          
+          <button class="btn btn-secondary" id="btnToday">
+            <i class="fas fa-calendar-day"></i>
+            Hoje
+          </button>
+          
+          <div class="calendario-navigation">
+            <button class="btn-icon" id="btnPrev">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <span id="currentDateRange" class="date-range">Carregando...</span>
+            <button class="btn-icon" id="btnNext">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendário Container -->
+      <div class="calendario-container">
+        <!-- View Month -->
+        <div id="viewMonthContainer" class="calendario-view active">
+          <div class="calendario-month">
+            <div class="calendario-weekdays">
+              <div class="weekday">Dom</div>
+              <div class="weekday">Seg</div>
+              <div class="weekday">Ter</div>
+              <div class="weekday">Qua</div>
+              <div class="weekday">Qui</div>
+              <div class="weekday">Sex</div>
+              <div class="weekday">Sáb</div>
+            </div>
+            <div id="monthGrid" class="calendario-days">
+              <!-- Dias serão preenchidos dinamicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- View Week -->
+        <div id="viewWeekContainer" class="calendario-view">
+          <div class="calendario-week">
+            <div class="calendario-week-header">
+              <div class="time-column"></div>
+              <div id="weekDaysHeader" class="week-days-header">
+                <!-- Dias da semana serão preenchidos dinamicamente -->
+              </div>
+            </div>
+            <div class="calendario-week-body">
+              <div id="timeSlots" class="time-slots">
+                <!-- Horários serão preenchidos dinamicamente -->
+              </div>
+              <div id="weekEventsContainer" class="week-events-container">
+                <!-- Eventos serão preenchidos dinamicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View Day -->
+        <div id="viewDayContainer" class="calendario-view">
+          <div class="calendario-day">
+            <div id="dayDate" class="day-date-header"></div>
+            <div class="calendario-day-body">
+              <div id="dayTimeSlots" class="time-slots">
+                <!-- Horários serão preenchidos dinamicamente -->
+              </div>
+              <div id="dayEventsContainer" class="day-events-container">
+                <!-- Eventos serão preenchidos dinamicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View List -->
+        <div id="viewListContainer" class="calendario-view">
+          <div id="eventsList" class="events-list">
+            <!-- Eventos serão listados dinamicamente -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Novo/Editar Evento -->
+  <div id="eventModal" class="modal">
+    <div class="modal-content calendario-modal-content">
+      <div class="modal-header">
+        <h3 id="eventModalTitle">Novo Evento</h3>
+        <button class="modal-close" id="eventModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="eventForm" class="calendario-form">
+        <div class="form-group">
+          <label for="eventTitulo">Título *</label>
+          <input type="text" id="eventTitulo" name="titulo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="eventDescricao">Descrição</label>
+          <textarea id="eventDescricao" name="descricao" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventTipo">Tipo *</label>
+            <select id="eventTipo" name="tipo" required>
+              <option value="projeto">Projeto</option>
+              <option value="equipe">Equipe</option>
+              <option value="reuniao">Reunião</option>
+              <option value="evento_pessoal">Pessoal</option>
+              <option value="prazo">Prazo</option>
+              <option value="lembrete">Lembrete</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="eventCor">Cor</label>
+            <input type="color" id="eventCor" name="cor" value="#3b82f6">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="eventDiaInteiro" name="dia_inteiro">
+            <span>Dia inteiro</span>
+          </label>
+        </div>
+
+        <div class="form-row" id="eventDatesRow">
+          <div class="form-group">
+            <label for="eventDataInicio">Data de Início *</label>
+            <input type="datetime-local" id="eventDataInicio" name="data_inicio" required>
+          </div>
+
+          <div class="form-group">
+            <label for="eventDataFim">Data de Fim</label>
+            <input type="datetime-local" id="eventDataFim" name="data_fim">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="eventLocal">Local</label>
+          <input type="text" id="eventLocal" name="local" placeholder="Ex: Sala de Reuniões, Online, etc.">
+        </div>
+
+        <div class="form-group">
+          <label for="eventParticipantes">Participantes (emails separados por vírgula)</label>
+          <input type="text" id="eventParticipantes" name="participantes" placeholder="email1@exemplo.com, email2@exemplo.com">
+        </div>
+
+        <div class="form-group" id="eventProjetoGroup" style="display: none;">
+          <label for="eventProjeto">Projeto Relacionado</label>
+          <select id="eventProjeto" name="projeto_id">
+            <option value="">Nenhum</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="eventEquipeGroup" style="display: none;">
+          <label for="eventEquipe">Equipe Relacionada</label>
+          <select id="eventEquipe" name="equipe_id">
+            <option value="">Nenhuma</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelEvent">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Evento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Detalhes do Evento -->
+  <div id="eventDetailsModal" class="modal">
+    <div class="modal-content calendario-modal-content">
+      <div class="modal-header">
+        <h3 id="eventDetailsTitle"></h3>
+        <button class="modal-close" id="eventDetailsClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div id="eventDetailsContent" class="event-details-content">
+        <!-- Conteúdo será preenchido dinamicamente -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnEditEvent">Editar</button>
+        <button class="btn btn-danger" id="btnDeleteEvent">Excluir</button>
+        <button class="btn btn-secondary" id="btnCloseEventDetails">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/theme.js"></script>
+  <script src="scripts/notificacoes.js"></script>
+  <script src="scripts/calendario.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,332 @@
+/* ============================================
+   EQUIPES - Estilos para Sistema de Equipes
+   ============================================ */
+
+.equipes-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* Header */
+.equipes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-md);
+}
+
+.equipes-header h2 {
+  margin: 0 0 var(--spacing-xs) 0;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Stats */
+.equipes-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Equipes Grid */
+.equipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* Equipe Card */
+.equipe-card {
+  background: rgba(18, 23, 38, 0.7);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.equipe-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(77, 166, 255, 0.4);
+  box-shadow: 0 8px 30px rgba(77, 166, 255, 0.2);
+}
+
+.equipe-header {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-sm);
+}
+
+.equipe-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.equipe-title {
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.equipe-cor-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.equipe-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+.equipe-stats {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.equipe-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.equipe-stat i {
+  color: var(--color-primary);
+}
+
+.equipe-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(77, 166, 255, 0.1);
+  justify-content: flex-end;
+}
+
+/* Membros List */
+.membros-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-lg);
+}
+
+.membros-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: var(--spacing-xs);
+}
+
+.membros-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.membros-list::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 3px;
+}
+
+.membros-list::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+/* Membro Card */
+.membro-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(18, 23, 38, 0.5);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-base);
+}
+
+.membro-card:hover {
+  border-color: rgba(77, 166, 255, 0.4);
+  background: rgba(18, 23, 38, 0.7);
+}
+
+.membro-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.membro-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.membro-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.membro-name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.membro-email {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.membro-status {
+  flex-shrink: 0;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.membro-role {
+  flex-shrink: 0;
+  min-width: 150px;
+}
+
+.membro-role-select {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: var(--border-radius-sm);
+  padding: 6px 10px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  width: 100%;
+}
+
+.membro-role-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
+}
+
+.role-badge {
+  padding: 4px 10px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+/* Color Picker */
+.color-picker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.color-picker-wrapper input[type="color"] {
+  width: 60px;
+  height: 40px;
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  background: none;
+}
+
+.color-picker-wrapper input[type="text"] {
+  flex: 1;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-primary);
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.color-picker-wrapper input[type="text"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
+}
+
+/* Nav Link Portal */
+.nav-link-portal {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-base);
+  font-size: 0.9rem;
+}
+
+.nav-link-portal:hover {
+  color: var(--text-primary);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .equipes-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .equipes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .membro-card {
+    flex-wrap: wrap;
+  }
+  
+  .membro-role {
+    min-width: 100%;
+    order: 3;
+  }
+  
+  .membros-list {
+    max-height: 400px;
+  }
+}
+

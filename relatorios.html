@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Relatórios e Analytics | Lucid</title>
+
+  <meta name="description" content="Relatórios e Analytics - Lucid - Dashboard analítico completo com gráficos e métricas avançadas.">
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- jsPDF para exportação PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/crm.css">
+  <link rel="stylesheet" href="styles/relatorios.css">
+</head>
+
+<body class="relatorios-page">
+  
+  <!-- Header -->
+  <header class="crm-header">
+    <div class="crm-header-content">
+      <div class="crm-logo">
+        <a href="portal.html">
+          <h1>LUCID</h1>
+        </a>
+        <span class="crm-badge">Relatórios</span>
+      </div>
+      
+      <nav class="crm-nav">
+        <!-- Notificações -->
+        <div class="notification-wrapper">
+          <button id="notificationButton" class="btn-notification" title="Notificações">
+            <i class="fas fa-bell"></i>
+            <span id="notificationBadge" class="notification-badge" style="display: none;">
+              <span id="notificationCount">0</span>
+            </span>
+          </button>
+          <div id="notificationDropdown" class="notification-dropdown"></div>
+        </div>
+        
+        <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <a href="portal.html" class="nav-link-portal">
+          <i class="fas fa-home"></i>
+          <span>Portal</span>
+        </a>
+        <span class="user-info" id="userInfo"></span>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="crm-main">
+    <div class="crm-container">
+      
+      <!-- Header Actions -->
+      <div class="relatorios-header">
+        <div>
+          <h2 class="section-title">Relatórios e Analytics</h2>
+          <p class="section-subtitle">Dashboard analítico completo com métricas e gráficos avançados</p>
+        </div>
+        <div class="relatorios-actions">
+          <button class="btn btn-secondary" id="btnRefresh">
+            <i class="fas fa-sync-alt"></i>
+            Atualizar
+          </button>
+          <button class="btn btn-primary" id="btnExportPDF">
+            <i class="fas fa-file-pdf"></i>
+            Exportar PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="relatorios-filters">
+        <div class="filter-group">
+          <label for="filterPeriodo">Período</label>
+          <select id="filterPeriodo" class="filter-select">
+            <option value="7">Últimos 7 dias</option>
+            <option value="30" selected>Últimos 30 dias</option>
+            <option value="90">Últimos 90 dias</option>
+            <option value="365">Último ano</option>
+            <option value="custom">Personalizado</option>
+          </select>
+        </div>
+        
+        <div class="filter-group" id="customDateRange" style="display: none;">
+          <label for="filterDataInicio">Data Início</label>
+          <input type="date" id="filterDataInicio" class="filter-input">
+        </div>
+        
+        <div class="filter-group" id="customDateRangeEnd" style="display: none;">
+          <label for="filterDataFim">Data Fim</label>
+          <input type="date" id="filterDataFim" class="filter-input">
+        </div>
+        
+        <div class="filter-group">
+          <label for="filterTipoRelatorio">Tipo de Relatório</label>
+          <select id="filterTipoRelatorio" class="filter-select">
+            <option value="all">Todos</option>
+            <option value="leads">Leads</option>
+            <option value="projetos">Projetos</option>
+            <option value="equipes">Equipes</option>
+            <option value="produtividade">Produtividade</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Métricas Principais -->
+      <div class="relatorios-metrics-grid">
+        <div class="metric-card-large">
+          <div class="metric-icon-large">📊</div>
+          <div class="metric-content-large">
+            <h3 id="metricTotalLeads">0</h3>
+            <p>Total de Leads</p>
+            <span class="metric-change positive" id="metricLeadsChange">+0%</span>
+          </div>
+        </div>
+        
+        <div class="metric-card-large">
+          <div class="metric-icon-large">🎯</div>
+          <div class="metric-content-large">
+            <h3 id="metricTaxaConversao">0%</h3>
+            <p>Taxa de Conversão</p>
+            <span class="metric-change" id="metricConversaoChange">-</span>
+          </div>
+        </div>
+        
+        <div class="metric-card-large">
+          <div class="metric-icon-large">📁</div>
+          <div class="metric-content-large">
+            <h3 id="metricTotalProjetos">0</h3>
+            <p>Total de Projetos</p>
+            <span class="metric-change positive" id="metricProjetosChange">+0%</span>
+          </div>
+        </div>
+        
+        <div class="metric-card-large">
+          <div class="metric-icon-large">⚡</div>
+          <div class="metric-content-large">
+            <h3 id="metricProdutividade">0%</h3>
+            <p>Produtividade Média</p>
+            <span class="metric-change" id="metricProdutividadeChange">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficos -->
+      <div class="relatorios-charts-grid">
+        <!-- Taxa de Conversão de Leads -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Taxa de Conversão de Leads</h3>
+            <div class="chart-actions">
+              <button class="btn-icon-small" title="Expandir gráfico">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartConversaoLeads"></canvas>
+          </div>
+        </div>
+
+        <!-- Leads por Status -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Leads por Status</h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartLeadsStatus"></canvas>
+          </div>
+        </div>
+
+        <!-- Produtividade por Projeto -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Produtividade por Projeto</h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartProdutividadeProjetos"></canvas>
+          </div>
+        </div>
+
+        <!-- Timeline de Projetos -->
+        <div class="chart-card chart-card-full">
+          <div class="chart-header">
+            <h3>Timeline de Projetos</h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartTimelineProjetos"></canvas>
+          </div>
+        </div>
+
+        <!-- Performance da Equipe -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Performance da Equipe</h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartPerformanceEquipe"></canvas>
+          </div>
+        </div>
+
+        <!-- Evolução de Leads no Tempo -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Evolução de Leads no Tempo</h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartEvolucaoLeads"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabelas de Dados -->
+      <div class="relatorios-tables-grid">
+        <!-- Top Projetos -->
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Top 10 Projetos por Produtividade</h3>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Projeto</th>
+                  <th>Status</th>
+                  <th>Progresso</th>
+                  <th>Tarefas</th>
+                  <th>Taxa Conclusão</th>
+                </tr>
+              </thead>
+              <tbody id="tableTopProjetos">
+                <tr>
+                  <td colspan="5" class="empty-state">Carregando dados...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Top Equipes -->
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Performance por Equipe</h3>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Equipe</th>
+                  <th>Membros</th>
+                  <th>Projetos</th>
+                  <th>Tarefas Concluídas</th>
+                  <th>Performance</th>
+                </tr>
+              </thead>
+              <tbody id="tableTopEquipes">
+                <tr>
+                  <td colspan="5" class="empty-state">Carregando dados...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/theme.js"></script>
+  <script src="scripts/notificacoes.js"></script>
+  <script src="scripts/relatorios.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Financeiro | Lucid</title>
+
+  <meta name="description" content="Sistema Financeiro - Lucid - Orçamentos, faturas, receitas e despesas.">
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/crm.css">
+  <link rel="stylesheet" href="styles/financeiro.css">
+</head>
+
+<body class="financeiro-page">
+  
+  <!-- Header -->
+  <header class="crm-header">
+    <div class="crm-header-content">
+      <div class="crm-logo">
+        <a href="portal.html">
+          <h1>LUCID</h1>
+        </a>
+        <span class="crm-badge">Financeiro</span>
+      </div>
+      
+      <nav class="crm-nav">
+        <!-- Notificações -->
+        <div class="notification-wrapper">
+          <button id="notificationButton" class="btn-notification" title="Notificações">
+            <i class="fas fa-bell"></i>
+            <span id="notificationBadge" class="notification-badge" style="display: none;">
+              <span id="notificationCount">0</span>
+            </span>
+          </button>
+          <div id="notificationDropdown" class="notification-dropdown"></div>
+        </div>
+        
+        <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <a href="portal.html" class="nav-link-portal">
+          <i class="fas fa-home"></i>
+          <span>Portal</span>
+        </a>
+        <span class="user-info" id="userInfo"></span>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="crm-main">
+    <div class="crm-container">
+      
+      <!-- Header Actions -->
+      <div class="financeiro-header">
+        <div>
+          <h2 class="section-title">Sistema Financeiro</h2>
+          <p class="section-subtitle">Gerencie orçamentos, faturas, receitas e despesas</p>
+        </div>
+        <div class="financeiro-actions">
+          <button class="btn btn-secondary" id="btnRelatorios">
+            <i class="fas fa-chart-bar"></i>
+            Relatórios
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="financeiro-tabs">
+        <button class="financeiro-tab active" data-tab="resumo">
+          <i class="fas fa-chart-pie"></i>
+          Resumo
+        </button>
+        <button class="financeiro-tab" data-tab="orcamentos">
+          <i class="fas fa-file-invoice-dollar"></i>
+          Orçamentos
+        </button>
+        <button class="financeiro-tab" data-tab="faturas">
+          <i class="fas fa-receipt"></i>
+          Faturas
+        </button>
+        <button class="financeiro-tab" data-tab="receitas">
+          <i class="fas fa-arrow-down"></i>
+          Receitas
+        </button>
+        <button class="financeiro-tab" data-tab="despesas">
+          <i class="fas fa-arrow-up"></i>
+          Despesas
+        </button>
+      </div>
+
+      <!-- Resumo Tab -->
+      <div id="tabResumo" class="financeiro-tab-content active">
+        <!-- Estatísticas -->
+        <div class="financeiro-stats-grid">
+          <div class="stat-card-financeiro stat-receitas">
+            <div class="stat-icon-financeiro">💰</div>
+            <div class="stat-content-financeiro">
+              <h3 id="statTotalReceitas">R$ 0,00</h3>
+              <p>Total de Receitas</p>
+            </div>
+          </div>
+          
+          <div class="stat-card-financeiro stat-despesas">
+            <div class="stat-icon-financeiro">💸</div>
+            <div class="stat-content-financeiro">
+              <h3 id="statTotalDespesas">R$ 0,00</h3>
+              <p>Total de Despesas</p>
+            </div>
+          </div>
+          
+          <div class="stat-card-financeiro stat-saldo">
+            <div class="stat-icon-financeiro">💵</div>
+            <div class="stat-content-financeiro">
+              <h3 id="statSaldo">R$ 0,00</h3>
+              <p>Saldo</p>
+            </div>
+          </div>
+          
+          <div class="stat-card-financeiro stat-faturas">
+            <div class="stat-icon-financeiro">📄</div>
+            <div class="stat-content-financeiro">
+              <h3 id="statFaturasPendentes">0</h3>
+              <p>Faturas Pendentes</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cards de Resumo -->
+        <div class="financeiro-resumo-grid">
+          <div class="resumo-card">
+            <h4>Receitas do Mês</h4>
+            <div class="resumo-value" id="resumoReceitasMes">R$ 0,00</div>
+          </div>
+          
+          <div class="resumo-card">
+            <h4>Despesas do Mês</h4>
+            <div class="resumo-value" id="resumoDespesasMes">R$ 0,00</div>
+          </div>
+          
+          <div class="resumo-card">
+            <h4>Faturas Emitidas</h4>
+            <div class="resumo-value" id="resumoFaturasEmitidas">0</div>
+          </div>
+          
+          <div class="resumo-card">
+            <h4>Orçamentos Aprovados</h4>
+            <div class="resumo-value" id="resumoOrcamentosAprovados">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orçamentos Tab -->
+      <div id="tabOrcamentos" class="financeiro-tab-content">
+        <div class="financeiro-section-header">
+          <h3>Orçamentos</h3>
+          <button class="btn btn-primary" id="btnNovoOrcamento">
+            <i class="fas fa-plus"></i>
+            Novo Orçamento
+          </button>
+        </div>
+        
+        <div id="orcamentosList" class="financeiro-list">
+          <!-- Orçamentos serão listados aqui -->
+        </div>
+      </div>
+
+      <!-- Faturas Tab -->
+      <div id="tabFaturas" class="financeiro-tab-content">
+        <div class="financeiro-section-header">
+          <h3>Faturas</h3>
+          <button class="btn btn-primary" id="btnNovaFatura">
+            <i class="fas fa-plus"></i>
+            Nova Fatura
+          </button>
+        </div>
+        
+        <div id="faturasList" class="financeiro-list">
+          <!-- Faturas serão listadas aqui -->
+        </div>
+      </div>
+
+      <!-- Receitas Tab -->
+      <div id="tabReceitas" class="financeiro-tab-content">
+        <div class="financeiro-section-header">
+          <h3>Receitas</h3>
+          <button class="btn btn-primary" id="btnNovaReceita">
+            <i class="fas fa-plus"></i>
+            Nova Receita
+          </button>
+        </div>
+        
+        <div id="receitasList" class="financeiro-list">
+          <!-- Receitas serão listadas aqui -->
+        </div>
+      </div>
+
+      <!-- Despesas Tab -->
+      <div id="tabDespesas" class="financeiro-tab-content">
+        <div class="financeiro-section-header">
+          <h3>Despesas</h3>
+          <button class="btn btn-primary" id="btnNovaDespesa">
+            <i class="fas fa-plus"></i>
+            Nova Despesa
+          </button>
+        </div>
+        
+        <div id="despesasList" class="financeiro-list">
+          <!-- Despesas serão listadas aqui -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Novo/Editar Orçamento -->
+  <div id="orcamentoModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="orcamentoModalTitle">Novo Orçamento</h3>
+        <button class="modal-close" id="orcamentoModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="orcamentoForm" class="financeiro-form">
+        <input type="hidden" id="orcamentoId">
+        
+        <div class="form-group">
+          <label for="orcamentoProjeto">Projeto *</label>
+          <select id="orcamentoProjeto" class="form-input" required>
+            <option value="">Selecione um projeto</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="orcamentoTitulo">Título *</label>
+          <input type="text" id="orcamentoTitulo" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="orcamentoDescricao">Descrição</label>
+          <textarea id="orcamentoDescricao" class="form-input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="orcamentoValor">Valor Total *</label>
+            <input type="number" id="orcamentoValor" step="0.01" min="0" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="orcamentoStatus">Status</label>
+            <select id="orcamentoStatus" class="form-input">
+              <option value="rascunho">Rascunho</option>
+              <option value="aprovado">Aprovado</option>
+              <option value="rejeitado">Rejeitado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelOrcamento">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Novo/Editar Fatura -->
+  <div id="faturaModal" class="modal modal-large">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="faturaModalTitle">Nova Fatura</h3>
+        <button class="modal-close" id="faturaModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="faturaForm" class="financeiro-form">
+        <input type="hidden" id="faturaId">
+        
+        <div class="form-group">
+          <label for="faturaProjeto">Projeto (opcional)</label>
+          <select id="faturaProjeto" class="form-input">
+            <option value="">Nenhum projeto</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="faturaTitulo">Título *</label>
+          <input type="text" id="faturaTitulo" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="faturaDescricao">Descrição</label>
+          <textarea id="faturaDescricao" class="form-input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="faturaValor">Valor Total *</label>
+            <input type="number" id="faturaValor" step="0.01" min="0" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="faturaValorPago">Valor Pago</label>
+            <input type="number" id="faturaValorPago" step="0.01" min="0" class="form-input" value="0">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="faturaDataEmissao">Data de Emissão *</label>
+            <input type="date" id="faturaDataEmissao" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="faturaDataVencimento">Data de Vencimento</label>
+            <input type="date" id="faturaDataVencimento" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="faturaClienteNome">Nome do Cliente</label>
+          <input type="text" id="faturaClienteNome" class="form-input">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="faturaClienteEmail">Email do Cliente</label>
+            <input type="email" id="faturaClienteEmail" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="faturaStatus">Status</label>
+            <select id="faturaStatus" class="form-input">
+              <option value="pendente">Pendente</option>
+              <option value="parcial">Parcial</option>
+              <option value="paga">Paga</option>
+              <option value="cancelada">Cancelada</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="faturaGerarFromTimeTracking">
+            Gerar itens do Time Tracking
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelFatura">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Novo/Editar Receita -->
+  <div id="receitaModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="receitaModalTitle">Nova Receita</h3>
+        <button class="modal-close" id="receitaModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="receitaForm" class="financeiro-form">
+        <input type="hidden" id="receitaId">
+        
+        <div class="form-group">
+          <label for="receitaTipo">Tipo *</label>
+          <select id="receitaTipo" class="form-input" required>
+            <option value="fatura">Fatura</option>
+            <option value="outra">Outra</option>
+            <option value="reembolso">Reembolso</option>
+            <option value="transferencia">Transferência</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="receitaFaturaGroup" style="display: none;">
+          <label for="receitaFatura">Fatura Relacionada</label>
+          <select id="receitaFatura" class="form-input">
+            <option value="">Nenhuma</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="receitaDescricao">Descrição *</label>
+          <input type="text" id="receitaDescricao" class="form-input" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="receitaValor">Valor *</label>
+            <input type="number" id="receitaValor" step="0.01" min="0" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="receitaData">Data de Recebimento *</label>
+            <input type="date" id="receitaData" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="receitaCategoria">Categoria</label>
+            <input type="text" id="receitaCategoria" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="receitaMetodo">Método de Pagamento</label>
+            <select id="receitaMetodo" class="form-input">
+              <option value="">Selecione</option>
+              <option value="pix">PIX</option>
+              <option value="transferencia">Transferência</option>
+              <option value="dinheiro">Dinheiro</option>
+              <option value="cartao">Cartão</option>
+              <option value="boleto">Boleto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="receitaObservacoes">Observações</label>
+          <textarea id="receitaObservacoes" class="form-input" rows="2"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelReceita">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Novo/Editar Despesa -->
+  <div id="despesaModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="despesaModalTitle">Nova Despesa</h3>
+        <button class="modal-close" id="despesaModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="despesaForm" class="financeiro-form">
+        <input type="hidden" id="despesaId">
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="despesaTipo">Tipo *</label>
+            <select id="despesaTipo" class="form-input" required>
+              <option value="operacional">Operacional</option>
+              <option value="marketing">Marketing</option>
+              <option value="infraestrutura">Infraestrutura</option>
+              <option value="pessoal">Pessoal</option>
+              <option value="outras">Outras</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="despesaProjeto">Projeto (opcional)</label>
+            <select id="despesaProjeto" class="form-input">
+              <option value="">Nenhum projeto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="despesaDescricao">Descrição *</label>
+          <input type="text" id="despesaDescricao" class="form-input" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="despesaValor">Valor *</label>
+            <input type="number" id="despesaValor" step="0.01" min="0" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="despesaData">Data de Pagamento *</label>
+            <input type="date" id="despesaData" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="despesaCategoria">Categoria</label>
+            <input type="text" id="despesaCategoria" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="despesaMetodo">Método de Pagamento</label>
+            <select id="despesaMetodo" class="form-input">
+              <option value="">Selecione</option>
+              <option value="pix">PIX</option>
+              <option value="transferencia">Transferência</option>
+              <option value="dinheiro">Dinheiro</option>
+              <option value="cartao">Cartão</option>
+              <option value="boleto">Boleto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="despesaFornecedor">Fornecedor</label>
+            <input type="text" id="despesaFornecedor" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="despesaNotaFiscal">Nota Fiscal</label>
+            <input type="text" id="despesaNotaFiscal" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="despesaObservacoes">Observações</label>
+          <textarea id="despesaObservacoes" class="form-input" rows="2"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelDespesa">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Relatórios -->
+  <div id="reportsModal" class="modal modal-large">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Relatórios Financeiros</h3>
+        <button class="modal-close" id="reportsModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="reports-content">
+        <div class="reports-tabs">
+          <button class="report-tab active" data-tab="geral">Resumo Geral</button>
+          <button class="report-tab" data-tab="receitas">Receitas</button>
+          <button class="report-tab" data-tab="despesas">Despesas</button>
+          <button class="report-tab" data-tab="faturas">Faturas</button>
+        </div>
+
+        <div class="reports-body">
+          <div id="reportGeral" class="report-panel active">
+            <h4>Resumo Financeiro</h4>
+            <div id="reportGeralContent" class="report-content"></div>
+          </div>
+
+          <div id="reportReceitas" class="report-panel">
+            <h4>Análise de Receitas</h4>
+            <div id="reportReceitasContent" class="report-content"></div>
+          </div>
+
+          <div id="reportDespesas" class="report-panel">
+            <h4>Análise de Despesas</h4>
+            <div id="reportDespesasContent" class="report-content"></div>
+          </div>
+
+          <div id="reportFaturas" class="report-panel">
+            <h4>Análise de Faturas</h4>
+            <div id="reportFaturasContent" class="report-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/theme.js"></script>
+  <script src="scripts/notificacoes.js"></script>
+  <script src="scripts/financeiro.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projetos | Lucid</title>
+
+  <meta name="description" content="Gerenciamento de Projetos Lucid - Gerencie projetos, equipes e prazos.">
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/projetos.css">
+  <link rel="stylesheet" href="styles/projetos-sidebar-gantt.css">
+  <link rel="stylesheet" href="styles/chat-ia.css">
+  <link rel="stylesheet" href="styles/tarefas.css">
+  <link rel="stylesheet" href="styles/notificacoes.css">
+  <link rel="stylesheet" href="styles/comentarios.css">
+</head>
+<body class="projetos-page">
+
+  <!-- Header -->
+  <header class="projetos-header">
+    <div class="projetos-header-content">
+      <div class="projetos-logo">
+        <a href="portal.html">
+          <h1>LUCID</h1>
+        </a>
+        <span class="projetos-badge">Projetos</span>
+      </div>
+      
+      <nav class="projetos-nav">
+        <button id="sidebarToggle" class="btn-sidebar-toggle" title="Menu lateral">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="portal.html" class="nav-link-portal">
+          <i class="fas fa-home"></i>
+          <span>Portal</span>
+        </a>
+        
+        <!-- Notificações -->
+        <div class="notification-wrapper">
+          <button id="notificationButton" class="btn-notification" title="Notificações">
+            <i class="fas fa-bell"></i>
+            <span id="notificationBadge" class="notification-badge" style="display: none;">
+              <span id="notificationCount">0</span>
+            </span>
+          </button>
+          <div id="notificationDropdown" class="notification-dropdown"></div>
+        </div>
+        
+        <button id="themeToggle" class="btn-theme-toggle" title="Alternar tema">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <span class="user-info" id="userInfo"></span>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Ferramentas</h3>
+      <button id="sidebarClose" class="sidebar-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="sidebar-item active" data-view="grid">
+        <i class="fas fa-th"></i>
+        <span>Projetos</span>
+      </button>
+      <button class="sidebar-item" data-view="gantt">
+        <i class="fas fa-chart-gantt"></i>
+        <span>Calendário / Gantt</span>
+      </button>
+      <button class="sidebar-item" data-view="kanban">
+        <i class="fas fa-columns"></i>
+        <span>Kanban</span>
+      </button>
+      <div class="sidebar-divider"></div>
+      <button class="sidebar-item" data-view="calendar">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Calendário Mensal</span>
+      </button>
+      <button class="sidebar-item" data-view="timeline">
+        <i class="fas fa-clock"></i>
+        <span>Timeline</span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Overlay para fechar sidebar em mobile -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <main class="projetos-main" id="mainContent">
+    <div class="projetos-container">
+      
+      <!-- Dashboard Stats -->
+      <div class="projetos-stats">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-project-diagram"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Total de Projetos</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-play-circle"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="statEmAndamento">0</div>
+            <div class="stat-label">Em Andamento</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="statConcluidos">0</div>
+            <div class="stat-label">Concluídos</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="statAtrasados">0</div>
+            <div class="stat-label">Atrasados</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions Bar -->
+      <div class="projetos-actions">
+        <div class="actions-left">
+          <button id="btnNovoProjeto" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Novo Projeto
+          </button>
+          <button id="btnCreateInstagramPlan" class="btn btn-secondary" title="Criar plano de 30 dias para Instagram">
+            <i class="fab fa-instagram"></i>
+            Plano Instagram (30 dias)
+          </button>
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid" title="Visualização em Grid">
+              <i class="fas fa-th"></i>
+            </button>
+            <button class="view-btn" data-view="list" title="Visualização em Lista">
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="view-btn" data-view="kanban" title="Visualização Kanban">
+              <i class="fas fa-columns"></i>
+            </button>
+          </div>
+        </div>
+        <div class="actions-right">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Buscar projetos...">
+          </div>
+          <select id="filterStatus" class="filter-select">
+            <option value="all">Todos os Status</option>
+            <option value="planejamento">Planejamento</option>
+            <option value="em_andamento">Em Andamento</option>
+            <option value="pausado">Pausado</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+          <select id="filterPrioridade" class="filter-select">
+            <option value="all">Todas as Prioridades</option>
+            <option value="baixa">Baixa</option>
+            <option value="normal">Normal</option>
+            <option value="alta">Alta</option>
+            <option value="urgente">Urgente</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Projects Container -->
+      <div id="projectsContainer" class="projects-container grid-view">
+        <!-- Projetos serão carregados aqui -->
+      </div>
+
+      <!-- Gantt Chart Container -->
+      <div id="ganttContainer" class="gantt-container" style="display: none;">
+        <div class="gantt-header">
+          <div class="gantt-controls">
+            <button id="ganttPrevMonth" class="btn-icon">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <h3 id="ganttMonthYear"></h3>
+            <button id="ganttNextMonth" class="btn-icon">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <button id="ganttToday" class="btn btn-secondary btn-sm">Hoje</button>
+          </div>
+        </div>
+        <div class="gantt-content">
+          <div class="gantt-sidebar">
+            <div class="gantt-sidebar-header">Projeto</div>
+            <div id="ganttProjectsList" class="gantt-projects-list">
+              <!-- Lista de projetos será gerada aqui -->
+            </div>
+          </div>
+          <div class="gantt-chart-area">
+            <div id="ganttTimeline" class="gantt-timeline">
+              <!-- Timeline será gerada aqui -->
+            </div>
+            <div id="ganttBars" class="gantt-bars">
+              <!-- Barras Gantt serão geradas aqui -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar View Container -->
+      <div id="calendarContainer" class="calendar-container" style="display: none;">
+        <div class="calendar-header">
+          <div class="calendar-controls">
+            <button id="calendarPrevMonth" class="btn-icon">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <h3 id="calendarMonthYear"></h3>
+            <button id="calendarNextMonth" class="btn-icon">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <button id="calendarToday" class="btn btn-secondary btn-sm">Hoje</button>
+          </div>
+        </div>
+        <div id="calendarGrid" class="calendar-grid">
+          <!-- Calendário será gerado aqui -->
+        </div>
+      </div>
+
+      <!-- Timeline View Container -->
+      <div id="timelineContainer" class="timeline-container" style="display: none;">
+        <div class="timeline-header">
+          <h3>Timeline de Projetos</h3>
+        </div>
+        <div id="timelineContent" class="timeline-content">
+          <!-- Timeline será gerada aqui -->
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <i class="fas fa-project-diagram"></i>
+        <h3>Nenhum projeto encontrado</h3>
+        <p>Crie seu primeiro projeto para começar a gerenciar seus projetos!</p>
+        <button class="btn btn-primary" onclick="document.getElementById('btnNovoProjeto').click()">
+          <i class="fas fa-plus"></i>
+          Criar Projeto
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Criar/Editar Projeto -->
+  <div id="projectModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Novo Projeto</h2>
+        <button class="modal-close" id="modalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="projectForm">
+          <input type="hidden" id="projectId">
+          
+          <div class="form-group">
+            <label for="projectNome">Nome do Projeto *</label>
+            <input type="text" id="projectNome" required placeholder="Ex: Sistema de Automação">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="projectStatus">Status *</label>
+              <select id="projectStatus" required>
+                <option value="planejamento">Planejamento</option>
+                <option value="em_andamento">Em Andamento</option>
+                <option value="pausado">Pausado</option>
+                <option value="concluido">Concluído</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="projectPrioridade">Prioridade *</label>
+              <select id="projectPrioridade" required>
+                <option value="baixa">Baixa</option>
+                <option value="normal" selected>Normal</option>
+                <option value="alta">Alta</option>
+                <option value="urgente">Urgente</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="projectDataInicio">Data de Início</label>
+              <input type="date" id="projectDataInicio">
+            </div>
+
+            <div class="form-group">
+              <label for="projectDataFim">Data de Término</label>
+              <input type="date" id="projectDataFim">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="projectCliente">Cliente</label>
+            <input type="text" id="projectCliente" placeholder="Nome do cliente">
+          </div>
+
+          <div class="form-group">
+            <label for="projectDescricao">Descrição</label>
+            <textarea id="projectDescricao" rows="4" placeholder="Descreva o projeto..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Membros da Equipe</label>
+            <div class="team-members">
+              <div id="teamMembersList" class="members-list">
+                <!-- Membros serão adicionados aqui -->
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnAddMember">
+                <i class="fas fa-user-plus"></i>
+                Adicionar Membro
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="projectOrcamento">Orçamento (R$)</label>
+            <input type="number" id="projectOrcamento" step="0.01" min="0" placeholder="0.00">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="btnCancel">Cancelar</button>
+            <button type="submit" class="btn btn-primary" id="btnSave">Salvar Projeto</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Adicionar Membro -->
+  <div id="memberModal" class="modal modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Adicionar Membro</h2>
+        <button class="modal-close" id="memberModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="memberForm">
+          <div class="form-group">
+            <label for="memberNome">Nome *</label>
+            <input type="text" id="memberNome" required placeholder="Nome do membro">
+          </div>
+          <div class="form-group">
+            <label for="memberEmail">Email</label>
+            <input type="email" id="memberEmail" placeholder="email@exemplo.com">
+          </div>
+          <div class="form-group">
+            <label for="memberFuncao">Função/Cargo</label>
+            <input type="text" id="memberFuncao" placeholder="Ex: Desenvolvedor, Designer">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="btnCancelMember">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat com IA -->
+  <div class="chat-ia-container">
+    <button class="chat-ia-button" id="chatIaButton" title="Chat com IA">
+      <i class="fas fa-robot"></i>
+    </button>
+    <div class="chat-ia-window" id="chatIaWindow">
+      <div class="chat-ia-header">
+        <h3>
+          <i class="fas fa-robot"></i>
+          Assistente de Projetos
+        </h3>
+        <button class="chat-ia-close" id="chatIaClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="chat-ia-messages" id="chatIaMessages">
+        <div class="chat-ia-welcome">
+          <i class="fas fa-comments"></i>
+          <h4>Olá! Sou seu assistente de projetos</h4>
+          <p>Posso ajudar você com informações sobre projetos, prazos, planejamento e muito mais. Como posso ajudar?</p>
+        </div>
+      </div>
+      <div class="chat-ia-input-container">
+        <textarea 
+          class="chat-ia-input" 
+          id="chatIaInput" 
+          placeholder="Digite sua mensagem..."
+          rows="1"
+        ></textarea>
+        <button class="chat-ia-send" id="chatIaSend">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Tarefas -->
+  <div id="tasksModal" class="modal modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="tasksModalTitle">Tarefas do Projeto</h2>
+        <button class="modal-close" id="tasksModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tasks-header">
+          <button class="btn btn-primary" onclick="if (typeof openNewTaskModal === 'function') openNewTaskModal()">
+            <i class="fas fa-plus"></i>
+            Nova Tarefa
+          </button>
+        </div>
+        <div id="tasksList" class="tasks-list">
+          <!-- Tarefas serão renderizadas aqui -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Formulário de Tarefa -->
+  <div id="taskFormModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="taskFormModalTitle">Nova Tarefa</h2>
+        <button class="modal-close" id="taskFormModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="taskForm" onsubmit="if (typeof saveTask === 'function') { saveTask(event); } else { event.preventDefault(); }">
+          <input type="hidden" id="taskId">
+          <input type="hidden" id="taskParentId">
+          
+          <div class="form-group">
+            <label for="taskTitulo">Título *</label>
+            <input type="text" id="taskTitulo" name="titulo" required placeholder="Título da tarefa">
+          </div>
+          
+          <div class="form-group">
+            <label for="taskDescricao">Descrição</label>
+            <textarea id="taskDescricao" name="descricao" rows="3" placeholder="Descrição da tarefa"></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskStatus">Status *</label>
+              <select id="taskStatus" name="status" required>
+                <option value="pendente">Pendente</option>
+                <option value="em_andamento">Em Andamento</option>
+                <option value="pausada">Pausada</option>
+                <option value="concluida">Concluída</option>
+                <option value="cancelada">Cancelada</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="taskPrioridade">Prioridade *</label>
+              <select id="taskPrioridade" name="prioridade" required>
+                <option value="baixa">Baixa</option>
+                <option value="normal" selected>Normal</option>
+                <option value="alta">Alta</option>
+                <option value="urgente">Urgente</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskDataInicio">Data de Início</label>
+              <input type="date" id="taskDataInicio" name="dataInicio">
+            </div>
+            
+            <div class="form-group">
+              <label for="taskDataVencimento">Data de Vencimento</label>
+              <input type="date" id="taskDataVencimento" name="dataVencimento">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="taskResponsavel">Responsável (Email)</label>
+            <input type="email" id="taskResponsavel" name="responsavel" placeholder="email@exemplo.com">
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="if (typeof closeTaskFormModal === 'function') closeTaskFormModal()">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Comentários -->
+  <div id="taskCommentsModal" class="modal modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="taskCommentsTitle">Comentários</h2>
+        <button class="modal-close" onclick="if (typeof closeTaskCommentsModal === 'function') closeTaskCommentsModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="taskCommentsList" class="comments-list">
+          <!-- Comentários serão renderizados aqui -->
+        </div>
+        <form id="taskCommentForm" onsubmit="if (typeof addComment === 'function') { addComment(event); } else { event.preventDefault(); }">
+          <input type="hidden" id="taskCommentTaskId" name="taskId">
+          <div class="form-group">
+            <textarea id="taskCommentTexto" name="texto" rows="3" required placeholder="Adicionar comentário..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Adicionar Comentário</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Checklist -->
+  <div id="taskChecklistModal" class="modal modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="taskChecklistTitle">Checklist</h2>
+        <button class="modal-close" onclick="if (typeof closeTaskChecklistModal === 'function') closeTaskChecklistModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="taskChecklistList" class="checklist-list">
+          <!-- Checklist será renderizado aqui -->
+        </div>
+        <form id="taskChecklistForm" onsubmit="if (typeof addChecklistItem === 'function') { addChecklistItem(event); } else { event.preventDefault(); }">
+          <input type="hidden" id="taskChecklistTaskId" name="taskId">
+          <div class="form-group">
+            <input type="text" id="taskChecklistTexto" name="texto" required placeholder="Novo item do checklist...">
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Adicionar Item</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/app-config.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/notificacoes.js"></script>
+  <script src="scripts/comentarios-projetos.js"></script>
+  <script src="scripts/tarefas.js"></script>
+  <script src="scripts/projetos-gantt.js"></script>
+  <script src="scripts/chat-ia.js"></script>
+  <script src="scripts/create-instagram-plan.js"></script>
+  <script src="scripts/projetos.js"></script>
+</body>
+</html>
+

@@ -226,6 +226,42 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('filterStatus').addEventListener('change', filterLeads);
   document.getElementById('exportBtn').addEventListener('click', exportToCSV);
   document.getElementById('clearAllBtn').addEventListener('click', clearAllLeads);
+  
+  // Event delegation para botões de ação na tabela (apenas uma vez, não em displayLeads)
+  const tbody = document.getElementById('leadsTableBody');
+  if (tbody) {
+    tbody.addEventListener('click', async function(e) {
+      const btnWin = e.target.closest('.btn-win');
+      const btnDelete = e.target.closest('.btn-delete');
+      
+      if (btnWin) {
+        e.stopPropagation();
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const leadId = btnWin.getAttribute('data-lead-id');
+        console.log('Botão Ganhar clicado, leadId:', leadId);
+        if (leadId && window.markLeadAsWon) {
+          await window.markLeadAsWon(leadId);
+        } else {
+          console.error('Lead ID ou função markLeadAsWon não encontrados');
+        }
+        return false;
+      }
+      
+      if (btnDelete) {
+        e.stopPropagation();
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const leadId = btnDelete.getAttribute('data-lead-id');
+        if (leadId && window.deleteLead) {
+          await window.deleteLead(leadId);
+        } else {
+          console.error('Lead ID ou função deleteLead não encontrados');
+        }
+        return false;
+      }
+    });
+  }
 });
 
 // Carregar leads (Supabase ou localStorage)
@@ -348,8 +384,11 @@ function displayLeads(leads) {
             <option value="converted" ${lead.status === 'converted' ? 'selected' : ''}>Convertido</option>
           </select>
         </td>
-        <td>
-          <button onclick="deleteLead('${lead.id}')" class="btn-delete" title="Deletar">🗑️</button>
+        <td class="actions-cell">
+          ${lead.status !== 'converted' ? `
+            <button class="btn-win" data-lead-id="${lead.id}" title="Marcar como Ganho/Convertido">✅</button>
+          ` : ''}
+          <button class="btn-delete" data-lead-id="${lead.id}" title="Deletar">🗑️</button>
         </td>
       </tr>
     `;
@@ -664,6 +703,22 @@ window.updateLeadStatus = async function(leadId, newStatus) {
     showToast('Erro ao atualizar status.', 'error');
   } finally {
     setLoading(false);
+  }
+};
+
+window.markLeadAsWon = async function(leadId) {
+  if (confirm('Deseja marcar este lead como ganho/convertido?')) {
+    try {
+      setLoading(true);
+      await updateLeadInSource(leadId, { status: 'converted' });
+      await loadLeads();
+      showToast('Lead marcado como ganho/convertido com sucesso!', 'success');
+    } catch (error) {
+      console.error('Erro ao marcar lead como ganho:', error);
+      showToast('Erro ao marcar lead como ganho.', 'error');
+    } finally {
+      setLoading(false);
+    }
   }
 };
 

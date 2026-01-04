@@ -28,6 +28,8 @@ services:
         value: "lucid.suporte@gmail.com"
       - key: ADMIN_PASSWORD
         sync: false  # Configure manualmente por segurança
+      - key: OPENAI_API_KEY
+        sync: false  # Configure manualmente por segurança
     # Health check path (opcional)
     healthCheckPath: /
     # Headers de segurança (opcional, mas recomendado)
